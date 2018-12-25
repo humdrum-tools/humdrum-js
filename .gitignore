@@ -1,0 +1,5 @@
+*.bak
+Gemfile.lock
+_site
+.DS_Store
+.jekyll-metadata
