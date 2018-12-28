@@ -7,7 +7,7 @@ vim: ft=text
 
 {% include header.html %}
 
-The humdrum-js library contains a collection of javascript
+The humdrum-js library contains a collection of JavaScript
 objects for processing musical data in the <a target="_blank"
 href="https://www.humdrum.org">Humdrum syntax</a>.  Click on the name
 of an object in the listings below, or click on an object name at the

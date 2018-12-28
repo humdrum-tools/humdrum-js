@@ -83,7 +83,7 @@ RefRecords.prototype.AddStatuses = function () {
 //////////////////////////////
 //
 // RefRecords:AddLanguages -- Add full name of languages for
-//     reference records that have an associated langauge code.  General
+//     reference records that have an associated language code.  General
 //     user should not need to call this function.
 //
 
@@ -144,7 +144,7 @@ RefRecordEntry.prototype.getKeyDescription = function () {
 	if (language) {
 		output += " (in " + language;
 		if (original) {
-			output += ", original langauge";
+			output += ", original language";
 		}
 		output += ")";
 	}
@@ -338,7 +338,7 @@ RefRecordEntry.prototype.meanings = {
 	//      XAB => OTL@AB   (Title translated into Arabic)
 	// The @ system can work for any reference record, but the X system
 	// only works for the title (OTL).  With the @ system you can give
-	// two @@ to indicate the original langauge:
+	// two @@ to indicate the original language:
 	//     OTL     (Title with language unspecified)
 	//     OTL@@AB (Original title in Arabic)
 	//     OTL@EN  (Title translated into English)
@@ -452,10 +452,10 @@ RefRecordEntry.prototype.meanings = {
 //   https://en.wikipedia.org/wiki/ISO_639-2
 //   https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
 //
-// There is also now ISO 639.3 which aims to cover all known natural langauges:
+// There is also now ISO 639.3 which aims to cover all known natural languages:
 //   https://en.wikipedia.org/wiki/ISO_639-3
 //   https://en.wikipedia.org/wiki/ISO_639:a
-// That is probably overkill, but langauge codes could be expanded to level III.
+// That is probably overkill, but language codes could be expanded to level III.
 //
 // References:
 //    https://en.wikipedia.org/wiki/ISO_639

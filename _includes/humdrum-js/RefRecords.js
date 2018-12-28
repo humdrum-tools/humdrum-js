@@ -54,7 +54,7 @@ function RefRecords(humdrumfile) {
 
 RefRecords.prototype.clear = function () {
 	if (this.sequence && Array.isArray(this.sequence)) {
-		for (var i=0; i<sequence.length; i++) {
+		for (var i=0; i<this.sequence.length; i++) {
 			this.sequence[i].clear();
 		}
 	}
@@ -198,13 +198,7 @@ RefRecords.prototype.getRefAll = function (keyBase) {
 	}
 	// return all keyBase records
 	var items  = this.database[keyBase];
-	if (!items) {
-		return [];
-	} else if (items.length > 0) {
-		return items[0];
-	} else {
-		return [];
-	}
+	return items ? items : [];
 };
 
 

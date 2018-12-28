@@ -195,6 +195,7 @@ HumdrumBase.prototype.getLine = function (index) {
 
 HumdrumBase.prototype.analyzeRefRecords = function () {
 	this.refs = new RefRecords(this);
+	return this;
 };
 
 
@@ -394,7 +395,7 @@ HumdrumBase.prototype.ParseText = function (text, options) {
 		this.lines.push(humline);
 	}
 
-	if (options.analyzeAll || options.analyzeRefRecords) {
+	if (options && (options.analyzeAll || options.analyzeRefRecords)) {
 		this.analyzeRefRecords();
 	}
 

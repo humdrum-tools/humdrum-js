@@ -62,9 +62,9 @@ function RefRecordEntry(linetext, lineindex) {
 RefRecordEntry.prototype.clear = function () {
 	this.lineIndex    = -1;   // line index: offset from 0 for first line in file.
 	this.text         = "";   // the raw text of the reference record line.
-	if (owner) {
-		if (owner.ref) {
-			delete owner.ref;
+	if (this.owner) {
+		if (this.owner.ref) {
+			delete this.owner.ref;
 		}
 	}
 	this.owner        = null; // the HumdrumLine where the reference record entry came from.
