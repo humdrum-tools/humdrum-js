@@ -1,0 +1,25 @@
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumBase
+@METHOD:	getRefFirstExact
+@ACCESS:	public
+@RETURN:	
+@PARAMETERS:	
+@FILE:		
+@ALIAS:		
+@LINES:		
+@SEEALSO:	
+@SHORTDESC:	Get the first reference record that matches key plus qualifiers.
+@LONGDESC:	
+
+@@BEGIN: EXAMPLE
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@@END:	EXAMPLE
+
+@SRCCODE:
+
+@@END:	FunctionDocumentation
+
+

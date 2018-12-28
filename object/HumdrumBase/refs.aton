@@ -1,0 +1,25 @@
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumBase
+@METHOD:	refs
+@ACCESS:	public
+@RETURN:	
+@PARAMETERS:	
+@FILE:		
+@ALIAS:		
+@LINES:		
+@SEEALSO:	
+@SHORTDESC:	RefRecords object to manage reference records in Humdrum data.
+@LONGDESC:	
+
+@@BEGIN: EXAMPLE
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@@END:	EXAMPLE
+
+@SRCCODE:
+
+@@END:	FunctionDocumentation
+
+

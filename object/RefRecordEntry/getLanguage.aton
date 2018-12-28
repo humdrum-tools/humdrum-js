@@ -1,0 +1,25 @@
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	RefRecordEntry
+@METHOD:	getLanguage
+@ACCESS:	public
+@RETURN:	
+@PARAMETERS:	
+@FILE:		
+@ALIAS:		
+@LINES:		
+@SEEALSO:	
+@SHORTDESC:	Get language from language code.  Return null if no-language.
+@LONGDESC:	
+
+@@BEGIN: EXAMPLE
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@@END:	EXAMPLE
+
+@SRCCODE:
+
+@@END:	FunctionDocumentation
+
+

@@ -1,0 +1,171 @@
+
+<style>
+ul.function-listing {
+	-webkit-column-count: 3;
+	-moz-column-count: 3;
+	column-count: 3;
+	margin-left: 30px;
+}
+.h2subtitle {
+   font-weight: 200;
+   font-size: 80%;
+}
+</style>
+
+
+<script>
+function addObjectListContent(objectname, listing) {
+   var id = objectname + "-list";
+   var list = document.getElementById(id);
+   if (!list) {
+      return;
+   }
+   list.textContent = '';
+   var li;
+   var a;
+   for (i=0; i<listing.length; i++) {
+      li = document.createElement("LI");
+      a = document.createElement("A");
+      li.appendChild(a);
+      list.appendChild(li);
+      a.textContent = listing[i];
+      a.href = objectname + "#" + listing[i];
+   }
+}
+</script>
+
+<script>
+window.addEventListener('DOMContentLoaded', function(event) {
+   list = [   // START_DOCLIST(MidiFile)
+   ];   // END_DOCLIST(Humdrum)
+
+
+
+   addObjectListContent("MidiFile", list);
+});
+</script>
+
+<h2> <a href="MidiFile">MidiFile</a>:: <span object="h2subtitle">Main interface for reading/writing Standard MIDI Files</span></h2>
+<ul id="MidiFile-list" object="function-listing"></ul>
+
+
+
+<script>
+window.addEventListener("DOMContentLoaded", function(event) {
+   list = [   // START_DOCLIST(MidiEventList)
+   ];   // END_DOCLIST(MidiEventList)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   addObjectListContent("MidiEventList", list);
+});
+</script>
+
+<h2> <a href="MidiEventList">MidiEventList</a>:: <span object="h2subtitle">MidiFile track storage for MidiEvent lists</span></h2>
+<ul id="MidiEventList-list" object="function-listing"></ul>
+
+
+<script>
+window.addEventListener("DOMContentLoaded", function(event) {
+   list = [   // START_DOCLIST(MidiEvent)
+   ];   // END_DOCLIST(MidiEvent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   addObjectListContent("MidiEvent", list);
+});
+</script>
+
+
+<h2> <a href="MidiEvent">MidiEvent</a>:: (also inherits from <a href="MidiMessage">MidiMessage</a>) <span object="h2subtitle"> MidiMessage + timestamp</span> </h2>
+<ul id="MidiEvent-list" object="function-listing"></ul>
+
+<script>
+window.addEventListener("DOMContentLoaded", function(event) {
+   list = [   // START_DOCLIST(MidiMessage)
+   ];   // END_DOCLIST(MidiMessage)
+
+
+
+   addObjectListContent("MidiMessage", list);
+});
+</script>
+
+<h2> <a href="MidiMessage">MidiMessage</a>:: (also inherits from 
+<a href="http://www.cplusplus.com/reference/vector/vector">vector&lt;uchar&gt;</a>) </h2>
+
+<ul id="MidiMessage-list" object="function-listing"></ul>
+
+
+
+<script>
+window.addEventListener("DOMContentLoaded", function(event) {
+   list = [   // START_DOCLIST(Options)
+   ];   // END_DOCLIST(Options)
+
+
+   addObjectListContent("Options", list);
+});
+</script>
+
+<h2> <a href="Options">Options</a>:: <span object="h2subtitle">Auxiliary object for command-line option parsing</span></h2>
+<ul id="Options-list" object="function-listing"> </ul>
+
+
+
+<script>
+window.addEventListener("DOMContentLoaded", function(event) {
+   list = [   // START_DOCLIST(Binasc)
+   ];   // END_DOCLIST(Binasc)
+
+
+   addObjectListContent("Binasc", list);
+});
+</script>
+
+<h2> <a href="Binasc">Binasc</a>:: <span object="h2subtitle">Helper object for ASCII MIDI file parsing</span></h2>
+<ul id="Binasc-list" object="function-listing"> </ul>
+
+

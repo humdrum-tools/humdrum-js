@@ -1,0 +1,57 @@
+
+
+{% include humdrum-scripts.html %}
+{% include banner-tweak.html %}
+{% include breadcrumbs.html %}
+
+
+<script src="/scripts/external/handlebars-v4.0.12.js"></script>
+<script src="/scripts/external/aton.js"></script>
+
+<style>
+
+footer p > small {
+	display: none;
+}
+
+header h2 {
+	color: #aaaaaa;
+	font-size: 120%;
+	display: block
+}
+
+
+@media print, screen and (max-width: 720px) {
+	header h2 {
+		display: none;
+	}
+	header h1 {
+		margin-top: -10px;
+	}
+}
+
+
+
+</style>
+
+<script>
+// Description: Add subtitle
+
+document.addEventListener("DOMContentLoaded", function() {
+	var sitetitle = document.querySelector("header h1");
+	if (!sitetitle) {
+		return;
+	}
+	var subtitle = document.createElement("h2");
+	subtitle.innerHTML = "A Javascript parser for musical data in the Humdrum syntax";
+	sitetitle.insertAdjacentElement("afterend", subtitle);
+	
+	if (window.location.pathname !== "/") {
+		var linkit = "<a href='/'>" + sitetitle.outerHTML; + "</a>";
+		sitetitle.outerHTML = linkit;
+	}
+
+});
+
+</script>
+
