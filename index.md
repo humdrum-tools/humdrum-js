@@ -62,6 +62,18 @@ as `Performer's name (in Siouan languages, original language)`, and
 standard (official) reference record.
 
 
+# Using humdrum-js on your webpage #
+
+To use the Humdrum-js library on your webpage, add the following line to it:
+
+```html
+<script src="https://js.humdrum.org/scripts/humdrum.js"></script>
+```
+
+It is currently in an early state of development, but will be modeled off
+of the <a target="_blank" href="https://humlib.humdrum.org">humlib C++
+Humdrum parser</a>.
+
 
 
 
