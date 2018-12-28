@@ -43,9 +43,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	if (!sitetitle) {
 		return;
 	}
+
+	// already implemented via Github repository text.
+	/*
 	var subtitle = document.createElement("h2");
 	subtitle.innerHTML = "A Javascript parser for musical data in the Humdrum syntax";
 	sitetitle.insertAdjacentElement("afterend", subtitle);
+	*/
 	
 	if (window.location.pathname !== "/") {
 		var linkit = "<a href='/'>" + sitetitle.outerHTML; + "</a>";
