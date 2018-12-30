@@ -1,16 +1,25 @@
+---
+---
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
 @METHOD:	clear
 @ACCESS:	public
-@RETURN:	
-@PARAMETERS:	
-@FILE:		
+@RETURN:	this
+@PARAMETERS:	void
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
-@SHORTDESC:	Intialize variables for object.
+@SEEALSO:	parse
+@SHORTDESC:	Initialize object variables to an empty state.
 @LONGDESC:	
+
+The <span class="function">clear</span> function will initialize the
+state variables of a HumdrumLine object.  This function is called when
+the object is created, so all of the variables in the object will be
+present, but in an empty state.  In general this function should not be
+necessary to call, because it will be called automatically when parsing
+a new text line.
 
 @@BEGIN: EXAMPLE
 @DESCRIPTION:
@@ -19,6 +28,7 @@
 @@END:	EXAMPLE
 
 @SRCCODE:
+{% include humdrum-js/HumdrumLine-clear.js -%}
 
 @@END:	FunctionDocumentation
 

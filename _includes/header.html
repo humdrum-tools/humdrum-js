@@ -9,7 +9,143 @@
 <script src="/scripts/external/handlebars-v4.0.12.js"></script>
 <script src="/scripts/external/aton.js"></script>
 
+<!-- for documentation pages in /object: -->
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/hopscotch.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
 <style>
+
+pre.code-example {
+	border-bottom: none;
+	/*
+	border-top: 1px solid #c7c7c7;
+	border-left: 1px solid #c7c7c7;
+	border-right: 1px solid #c7c7c7;
+	*/
+	background-color: #322931; /* to match hljs theme */
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border: none;
+} 
+
+pre {
+	background-color: #322931;
+
+}
+
+pre.output-example {
+	color: white;
+	background-color: #322931; /* to match hljs theme */
+	/*
+	border-left: 1px solid #c7c7c7;
+	border-bottom: 1px solid #c7c7c7;
+	border-right: 1px solid #c7c7c7;
+	*/
+	border-top: none;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border: none;
+}
+
+
+
+
+h1.docslot {
+	font-size: 1.25rem;
+}
+
+h2.docslot {
+	font-size: 1.05rem;
+	color: #4276b6;
+	margin-bottom: -1.1rem;
+}
+
+span.func {
+	font-style: italic;
+	color: #000055;
+}
+span.func::after {
+	content: "()";
+	color: rgba(0,0,0,0.4);
+}
+
+span.obj { 
+	color: #005500;
+}
+
+span.obj.s::after {
+	content: "s";
+	color: #005500;
+}
+
+span.arr::after {
+	content: "[]";
+	font-size: 0.8rem;
+	font-family: Helvetica;
+	color: #00550044;
+}
+
+
+.pval { /* parameter values  for options object mostly */
+ 	font-family: "Sans Mono", "Consolas", "Courier", monospace;
+	background-color: #ddd;
+	padding: 3px 3px 2px 3px;
+}
+
+span.param {
+ 	font-family: "Sans Mono", "Consolas", "Courier", monospace;
+}
+
+span.var {
+ 	font-family: "Sans Mono", "Consolas", "Courier", monospace;
+	color: #550000;
+}
+
+span.var::before, .pre-dot::before, span.func::before {
+	content: ".";
+	font-weight: bold;
+ 	font-family: "Sans Mono", "Consolas", "Courier", monospace;
+	color: #44444444;
+	margin-right: -0.1rem;
+}
+
+span.exinterp {
+	/* font-weight: bold; */
+ 	/* font-family: "Sans Mono", "Consolas", "Courier", monospace; */
+}
+span.exinterp::before {
+	content: "**";
+	font-weight: bold;
+	font-size: 80%;
+ 	font-family: "Sans Mono", "Consolas", "Courier", monospace;
+	fontsize: 0.7rem;
+	display: inline-block;
+	color: #44444444;;
+	letter-spacing: -0.05rem;
+}
+
+
+.docslot-long-title {
+ 	font-family: "Sans Mono", "Consolas", "Courier", monospace;
+	font-weight: bold;
+}
+
+pre.hlexample {
+	padding: 0;
+
+}
+
+pre code {
+ 	font-family: "Sans Mono", "Consolas", "Courier", monospace;
+	line-height: 1rem;
+	font-size: 0.85rem;
+	font-weight: 400;
+	letter-spacing: -0.5px;
+}
 
 footer p > small {
 	display: none;

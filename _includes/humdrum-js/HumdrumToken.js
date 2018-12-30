@@ -24,48 +24,10 @@
 // * this.owner     = The HumdrumLine object that the HumdrumToken object is contained in.
 //
 
-
-//////////////////////////////
-//
-// HumdrumToken::initializer -- Create a HumdrumToken object.
-//
-
-function HumdrumToken(tokentext) {
-	this.clear();
-	if (typeof tokentext === "string" || tokentext instanceof String) {
-		this.text = tokentext;
-	}
-	return this;
-}
-
-
-
-//////////////////////////////
-//
-// HumdrumToken::clear --
-//
-
-HumdrumToken.prototype.clear = function () {
-	this.text     = null;   // full string of the token.
-	this.tabCount = null;   // number of tabs following token when line was parsed.
-	this.owner    = null;   // pointer to the HumdrumLine that contains this token.
-	this.subTokens = [];    // split of token string into subtokens.
-};
-
-
-
-//////////////////////////////
-//
-// HumdrumToken::stringify -- Convert object to plain text.
-//
-
-HumdrumToken.prototype.stringify = function () {
-	if (this.text && ((typeof this.text === "string") || this.text instanceof String)) {
-		return this.text;
-	} else {
-		return ".";
-	}
-}
+{% include humdrum-js/HumdrumToken-HumdrumToken.js -%}
+{% include humdrum-js/HumdrumToken-clear.js -%}
+{% include humdrum-js/HumdrumToken-stringify.js -%}
+{% include humdrum-js/HumdrumToken-getText.js -%}
 
 
 

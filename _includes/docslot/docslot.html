@@ -73,6 +73,13 @@ window.addEventListener("DOMContentLoaded", function () {
 		}
 		insertDocumentation(docslots[i], template);
 	}
+
+	// this function is used to add span links for when they
+	// are present on the MarkDown contents of the webpage, not 
+	// within the docslot text (which is done in the aton 
+	// processing downloa dcallback.
+	addObjectSpanLinks(document.body);
+
 });
 
 
@@ -183,7 +190,7 @@ details[open].example-details {
 	color: white;
 	border-radius: 3px;
 	padding-right: 5px;
-	margin-top: 0;
+	margin-top: -25px;
 	padding-left: 5px;
 	float: right;
 }
@@ -209,16 +216,24 @@ pre.output-example {
 }
 
 .example-output {
+
+	/* border-left: 1px solid #c7c7c7; */
+	/* border-right: 1px solid #c7c7c7; */
+	border: none;
+	border-top: none;
+	border-bottom: none;
+	margin-right: 0px;
+
 	padding-left:5px;
-   color: #333;
+   color: #322931;
 	background: #888; /* Old browsers */
-	background: -moz-linear-gradient(left,  #888 0%, #888 3%, #3a3c42 91%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#888), color-stop(3%,#888), color-stop(91%,#3a3c42)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(left,  #888 0%,#888 3%,#3a3c42 91%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(left,  #888 0%,#888 3%,#3a3c42 91%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(left,  #888 0%,#888 3%,#3a3c42 91%); /* IE10+ */
-	background: linear-gradient(to right,  #888 0%,#888 3%,#3a3c42 91%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#888', endColorstr='#3a3c42',GradientType=1 ); /* IE6-9 */
+	background: -moz-linear-gradient(left,  #888 0%, #888 3%, #322931 90%, #322931 110%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#888), color-stop(3%,#888), color-stop(90%,#322931), color-stop(110%, #322931)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  #888 0%,#888 3%,#322931 90%, #322931 110%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  #888 0%,#888 3%,#322931 90%, #322931 110%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  #888 0%,#888 3%,#322931 90%, #322931 110%); /* IE10+ */
+	background: linear-gradient(to right,  #888 0%,#888 3%,#322931 90%, #322931 110%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#888', endColorstr='#322931',GradientType=1 ); /* IE6-9 */
 }
 
 </style>
@@ -228,7 +243,7 @@ pre.output-example {
 
 <script>
 //
-// Handlebars templates for generating function documentation:
+// Handlebars templates for generatiobjng function documentation:
 //
 </script>
 
@@ -246,7 +261,8 @@ pre.output-example {
 				{{#if PARAMETERS }}
 					{{{printDeclarations this}}}
 				{{/if}}
-				{{{LONGDESC}}}
+				<br/>
+				{{{addp LONGDESC}}}
 				{{{showExamples EXAMPLE}}}
 				{{{codeLink METHOD FILE LINES SRCCODE}}}
 			</div>
@@ -266,7 +282,12 @@ pre.output-example {
 
 
 <script id="method-example" type="text/x-handlebars-template">
-	<summary>{{{DESCRIPTION}}}</summary>
+	<summary>{{{TITLE}}}</summary>
+	{{#if DESCRIPTION}}
+		<p style="margin-top:10px;">
+		{{{DESCRIPTION}}}
+		</p>
+	{{/if}}
 	<div>
 	<pre class="code-example">
 		<code class="language-javascript" data-lang="javascript">
@@ -280,6 +301,11 @@ pre.output-example {
 {{OUTPUT}}
 	</pre>
 	</div>
+{{#if POSTDESC}}
+	<p style="margin-top:10px;">
+	{{{POSTDESC}}}
+	</p>
+{{/if}}
 {{/if}}
 </script>
 
@@ -308,31 +334,145 @@ pre.output-example {
 //
 // Handlebars helper functions
 //
+Handlebars.registerHelper('addp', function (text) {
+	// add paragraph markers to string
+	text = text.replace(/^\s+/, "").replace(/\s+$/, "");
+	var lines = text.split("\n");
+	if (!lines) {
+		return text;
+	}
+	var empty = 0;
+	var i;
+	for (i=0; i<lines.length; i++) {
+		if (lines[i].match(/^\s*$/)) {
+			if (empty) {
+				// already added a paragraph marker so ignore
+				continue;
+			} else {
+				// need to add a paragraph marker
+				lines[i] = "</p><p>";
+			}
+		} else {
+			if (empty) {
+				empty = 0;
+			} else {
+				// do nothing
+			}
+		}
+		// processing headings (only two levels for now)
+
+		if (lines[i].match(/^\s*##/)) {
+			lines[i] = lines[i].replace(/##/, "<h2 class='docslot'>");
+			if (lines[i].match(/##\s*$/)) {
+				lines[i] = lines[i].replace(/##\s*$/, "</h2>");
+			} else {
+				lines[i] += "</h2>";
+			}
+		}
+
+		if (lines[i].match(/^\s*#/)) {
+			lines[i] = lines[i].replace(/#/, "<h1 class='docslot'>");
+			if (lines[i].match(/#\s*$/)) {
+				lines[i] = lines[i].replace(/#\s*$/, "</h1>");
+			} else {
+				lines[i] += "</h1>";
+			}
+		}
+
+	}
+	// remove automatically placed paragraph markers.
+	var j;
+	for (i=0; i<lines.length; i++) {
+		if (!lines[i].match(/<h1 /i)) {
+			continue;
+		}
+		for (j=i-1; j>=0; j--) {
+			if (lines[j].match(/^\s*$/)) {
+				continue;
+			}
+			if (lines[j] === "</p><p>") {
+				lines[j] = "</p>";
+			}
+			break;
+		}
+		for (j=i+1; j<lines.length; j++) {
+			if (lines[j].match(/^\s*$/)) {
+				continue;
+			}
+			if (lines[j] === "</p><p>") {
+				lines[j] = "<p>";
+			}
+			break;
+		}
+
+	}
+	var output = "<p>";
+	for (i=0; i<lines.length; i++) {
+		output += lines[i] + "\n";
+	}
+	output += "</p>";
+
+	return output;
+
+});
+
+
 
 Handlebars.registerHelper('codeLink', function (method, file, linerange, 
 		srccode) {
+// console.log("METHOD", method, "FILE", file, "LINERANGE", linerange, "SRCCODE", srccode);
 	if (typeof method === 'undefined') { return '' }
 	if (typeof file   === 'undefined') { return '' }
 
-   var url = 'https://github.com/craigsapp/midifile/tree/master/src-library/'
+   var url = 'https://js.humdrum.org/scripts/'
 	url += file;
    if (linerange) {
 		url += '#L' + linerange;
 	}
 	var output = '';
 
+	// remove initial comments;
+	var lines = srccode.match(/[^\r\n]+/g);
+	if (lines) {
+		var newcode = "";
+		var found = 0;
+		var len = lines.length;
+		var i;
+		for (i=len-1; i>=0; i--) {
+			if (lines[i].match(/^\s*$/)) {
+				continue;
+			}
+			len = i;
+			break;
+		}
+		for (i=0; i<=len; i++) {
+			if (!found) {
+				if (lines[i].match(/^\s*$/)) {
+					continue;
+				} else if (lines[i].match(/^\s*\/\//)) {
+					continue;
+				}
+				found = 1;
+			}
+// console.log("ADDING LINE TO LEN", lines[i]);
+			newcode += lines[i].replace(/\t/g, "   ") + "\n";
+		}
+		srccode = newcode;
+	}
+
    if (!file.match(/^\s*$/)) {
 		output += '<details class="srccode">\n';
 		output += '<summary>\n';
-		output += 'Source code for ' + method 
-		output += ' <a target="new" href="' + url;
-		output += '">on GitHub';
-   	output += '</a>\n';
+		// output += 'Source code for ' + method 
+		output += 'Source code for the function '
+		output += ' (or view in javascript source file <a target="code" href="' + url;
+		output += '">online ';
+   	output += '</a>)\n';
 		output += '</summary>\n';
 		if (!srccode.match(/^\s*$/)) {
-			output += '<pre style="background:#888888;">';
-			output += srccode;
-			output += '</pre>';
+			output += '<pre class="hlexample"><code class="javascript">';
+			output += srccode.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+			output += '</code></pre>';
 		}
 		output += '</details>\n';
 	}
@@ -376,47 +516,125 @@ function displaySourceBox (method, file) {
 
 Handlebars.registerHelper('printDeclarations', function (entry) {
    var output = '';
+	var i;
 
    if (entry.PARAMETERS instanceof Array) {
 		for (var i=0; i<entry.PARAMETERS.length; i++) {
    		output += '<span style="color:#000088; font-weight:500;">';
+			/* list reutrn values as separate entries for javascript
 			if (entry.RETURN instanceof Array) {
 				output += entry.RETURN[i];
 			} else {
 				output += entry.RETURN;
 			}
+			*/
 			output += ' ';
-			output += '<span class="docslot-long-title">';
+			output += '<span class="docslot-long-title pre-dot">';
    		output += entry.METHOD;
 			output += '</span>';
 			output += '(';
-			output += entry.PARAMETERS[i];
-			output += ');';
+			if (!entry.PARAMETERS[i].match(/^\s*void\s*$/)) {
+				output += "<i>" + entry.PARAMETERS[i] + "</i>";
+			}
+			output += ')';
    		output += '</span>';
    		output += '</br>';
 		}
 
 	} else {
    	output += '<span style="color:#000088; font-weight:500;">';
+		/*
 		if (entry.RETURN instanceof Array) {
 			output += entry.RETURN[0];
 		} else {
 			output += entry.RETURN;
 		}
+		*/
 		output += ' ';
-		output += '<span class="docslot-long-title">';
+		output += '<span class="docslot-long-title pre-dot">';
    	output += entry.METHOD;
 		output += '</span>';
 		output += '(';
-		output += entry.PARAMETERS;
-		output += ');';
+		if (!entry.PARAMETERS.match(/^\s*void\s*$/)) {
+			output += "<i>" + entry.PARAMETERS + "</i>";
+		}
+		output += ')';
    	output += '</span>';
    	output += '</br>';
+	}
+
+	if (entry.RETURN instanceof Array) {
+		for (i=0; i<entry.RETURN.length; i++) {
+			output += "<b>Return type:</b> ";
+			output += getReturnInfo(entry.RETURN[i]);
+			output += "<br/>";
+		}
+	} else if (entry.RETURN) {
+		output += "<b>Return type:</b> ";
+		output += getReturnInfo(entry.RETURN);
+		output += "<br/>";
+	}
+
+	if (entry.SEEALSO instanceof Array) {
+		output += "<b>See also:</b> ";
+		for (i=0; i<entry.SEEALSO.length; i++) {
+			output += getSeeAlso(entry.SEEALSO[i]);
+			if (i < entry.SEEALSO.length - 1) {
+				output += ", ";
+			}
+		}
+		output += "<br/>";
+	} else if (entry.SEEALSO) {
+		output += "<b>See also:</b> ";
+		output += getSeeAlso(entry.SEEALSO);
+		output += "<br/>";
 	}
 
    return output;
 });
 
+
+
+//////////////////////////////
+//
+// getReturnInfo --
+//
+
+function getReturnInfo(data) {
+	var output = "";
+	if (data.match(/^\s*(this|none)\s*$/)) {
+		output += "<i>";
+	}
+	output += data;
+	if (data.match(/^\s*(this|none)\s*$/)) {
+		output += "</i>";
+	}
+	return output;
+}
+
+
+
+//////////////////////////////
+//
+// getSeeAlso --
+//
+
+
+function getSeeAlso(text) {
+	text = text.trim();
+	var output = "";
+	if (text.match(/^\s*$/)) {
+		return output;
+	}
+	if (text.match(/\//)) {
+		// pointer to a function/variable in another object.
+		var link = text.replace(/\//, "/#").replace(/^/, "../");
+		output += "<a tartet='_blank' href='" + link + "'>" + text + "</a>";
+	} else {
+		output += "<a tartet='_blank' href='#" + text + "'>" + text + "</a>";
+	} 
+	return output;
+}
 
 
 
@@ -438,7 +656,7 @@ Handlebars.registerHelper('showExamples', function (entry) {
 
 	var output = '';
 	if (entry instanceof Array) {
-		output += '<br><span style="font-weight:700">Examples:</span>';
+		output += '<br><span style="display:block; font-weight:700; margin-top:-20px;">Examples:</span>';
 		output += '<span';
 		output += ' class="example-button"';
 		output += ' onclick="expandAllExamples(this);">'
@@ -455,11 +673,18 @@ Handlebars.registerHelper('showExamples', function (entry) {
 		output += '</ol>\n';
 	} else if (!entry.DESCRIPTION.match(/^\s*$/)) {
 	   output = '<details class="example-details">';
-		output += '<summary>';
+		output += '<summary style="margin-bottom:5px;">';
 		output += '<span style="font-weight:700">Example:</span> ';
-		output += entry.DESCRIPTION;
+		output += entry.TITLE;
 		output += '</summary>';
+		output += '<p style="margin-top:10px;">';
+		output += entry.DESCRIPTION + "</p>";
 		output += templatesingle(entry);
+		if (entry.POSTDESC) {
+			output += '<p style="margin-top:10px;">';
+			output += entry.POSTDESC + "</p>";
+		}
+		output += "<br/>";
 		output += '</details>';
 	}
 
@@ -523,7 +748,7 @@ function insertDocumentation(target, template) {
 	var matches      = fullname.match(/(.*)::(.*)/);
    if (!matches) {
       console.log("Error: not a class function:", fullname);
-      returnl;
+      return;
    }
 	var classname    = matches[1];
 	var functionname = matches[2];
@@ -531,6 +756,7 @@ function insertDocumentation(target, template) {
    functionname = functionname.replace(/\[\]/, "SQUAREBRACKETS");
    
 	var local = sessionStorage[classname + '/' + functionname + '.aton'];
+local = null; // disable cacheing, at least for now.
 	if (local && !local.match(/^\s*$/)) {
 		processAtonData(local, fullname, functionname, target, template, fullQ);
    } else {
@@ -575,10 +801,92 @@ function processAtonData(atondata, fullname, functionname, target, template, ful
       target.id = fullname;
    }
 	target.innerHTML = dochtml;
+	var el = target.querySelectorAll("pre code");
+	if (el) {
+		for (var q=0; q<el.length; q++) {
+			hljs.highlightBlock(el[q]);
+		}
+	}
+	addObjectSpanLinks(target);
+
 	var matches = window.location.href.match(/#([^\/]+)$/);
 	if (matches && (matches[1] === functionname)) {
 		showSlotDocumentation(fullname);
 	}
+}
+
+
+
+//////////////////////////////
+//
+// addObjectSpanLinks --
+//
+
+function addObjectSpanLinks(el) {
+	if (!el) {
+		return;
+	}
+
+	var objs = el.querySelectorAll("span.obj");
+	var i;
+	for (i=0; i<objs.length; i++) {
+		if (window.location.pathname.match(objs[i].innerHTML)) {
+			continue;
+		}
+		var obj = objs[i].innerHTML.trim();
+		var text = '<a target="_blank" href="/object/' + obj + '">';
+		text += objs[i].outerHTML;
+		text += "</a>";
+		objs[i].outerHTML = text;
+	}
+
+	// add links to functions for the same object as on the 
+	// documentation page.  See span.objlink for links to locations in
+	// other objects/pages.
+	objs = el.querySelectorAll("span.func");
+	for (i=0; i<objs.length; i++) {
+		var obj = objs[i].innerHTML.trim();
+		var text = '<a target="_blank" href="#' + obj + '">';
+		text += objs[i].outerHTML;
+		text += "</a>";
+		objs[i].outerHTML = text;
+	}
+
+	// Links to functions in objects (or links to variable in objects).
+	// Primarily intended for functions and variables that are not
+	// in the documentation of the currently processed object.
+	// <span class="objfunc">HumdrumBase.parse</span>
+	objs = el.querySelectorAll("span.objfunc")
+	for (i=0; i<objs.length; i++) {
+		var cont = objs[i].innerHTML.trim();
+		var matches = cont.match(/^([^.]+)\.([^.]+)$/);
+		if (!matches) {
+			continue;
+		}
+console.log("PROCESSING", objs[i]);
+		var object = matches[1];
+		var funct = matches[2];
+		var output = "";
+		output += '<a target="_blank" href="/object/' + object;
+		output += "/#" + funct + '">';
+		output += '<span class="obj">' + object + '</span>';
+		output += '<span class="func">' + funct + '</span>';
+		output += "</a>";
+		objs[i].outerHTML = output;
+	}
+
+	// add exinterp links (these will link to humdrum documentation about that exinter
+	// remove any exinterp **marks from the innerHTML content, since these will be added
+	// with CSS :before styling.
+	objs = el.querySelectorAll("span.exinterp")
+	for (i=0; i<objs.length; i++) {
+		text = objs[i].innerHTML;
+		if (text.match(/^\*\*/)) {
+			text = text.replace(/^\*\*/, "");
+			objs[i].innerHTML = text;
+		}
+	}
+
 }
 
 

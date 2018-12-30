@@ -1,0 +1,49 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	Convert
+@METHOD:	csvToTsv
+@ACCESS:	public
+@PARAMETERS:	csv-formatted-string
+@RETURN:	tsv-formatted-string
+@FILE:		components/Convert.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	tsvToCsv
+@SHORTDESC:	Convert a CSV string into a TSV string.
+@LONGDESC:	
+
+The <span class="function">csvToTsv</span> function converts a CSV
+(comma-separate-value) string into a TSV (tab-separated-value) string.
+Humdrum data is typically stored in TSV format.  This function is used
+to convert CSV encoded Humdrum data into the TSV form, which is the
+preferred format for inputting into the Humdrum data parsing functions.
+This function allows for both CSV and TSV inputt into the parsing
+functions.
+
+The function is also used by the various stringify functions used
+to generate a CSV string of Humdrum data stored in a Humdrum object.
+
+
+@@BEGIN: EXAMPLE
+@TITLE: Basic CSV line parsing.
+@DESCRIPTION:
+
+This example shows the basic functionality of the <span
+class="func">csvToTsv</span> converter.  There are four fields of data
+in the CSV string, and these are seen in the output as the same
+fields, now separated by tabs instead of commas.
+
+@CODE:
+var input = "a,b,c,d";
+Convert.prototype.csvToTsv(input)
+@OUTPUT:
+"a	b	c	d"
+@@END:	EXAMPLE
+@SRCCODE:
+{% include humdrum-js/Convert-csvToTsv.js -%}
+
+@@END:	FunctionDocumentation
+
+

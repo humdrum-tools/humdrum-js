@@ -1,0 +1,63 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	Convert
+@METHOD:	TokenToCsv
+@ACCESS:	public
+@PARAMETERS:	string
+@RETURN:	quote-escaped-string
+@FILE:		components/Convert.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	tsvToCsv
+@SHORTDESC:	Quote-escape a string if necessary for CSV conversion.
+@LONGDESC:	
+
+The <span class="function">TokenToCsv</span> function checks if the input
+string contains a double-quote, a comma, any leading space, 
+and/or any trailing space.  If it finds any, it will convert the input
+into a quote-escaped string that can be used to build CSV output for the
+<span class="obj">HumdrumLine</span> object.
+
+
+
+@@BEGIN: EXAMPLE
+@TITLE: Converting a string that does not need to be escaped.
+@DESCRIPTION:
+	This is an example of an input string that does not
+	need to be quote-escaped.
+@CODE:
+var input = "This is a test";
+Convert.prototype.TokenToCsv(input);
+@OUTPUT:
+"This is a test"
+@POSTDESC:
+	The qoutes in the output are from the javascript console.
+	The actual string does not contain these quotes.
+@@END:	EXAMPLE
+
+@@BEGIN: EXAMPLE
+@TITLE: Converting a string that does need to be escaped.
+@DESCRIPTION:
+	This is an example of an input string that does need to be
+	quote-escaped, since it contains two double-quote characters.
+@CODE:
+var input = 'This is a "test"';
+Convert.prototype.TokenToCsv(input);
+@OUTPUT:
+""This is a \"test\"""
+@POSTDESC:
+	The outer quotes are displayed by the javascript console, and
+	are note part of the string.  The next inner set of quotes
+	are the quotes that encolse the CSV data.  The two inner
+	double quotes that are preceeded by a blackslash are escaped
+	double-quotes that are part of the CSV data.
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/Convert-TokenToCsv.js -%}
+
+@@END:	FunctionDocumentation
+
+

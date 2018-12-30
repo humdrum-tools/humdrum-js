@@ -17,5 +17,8 @@ veroviourl: https://verovio-script.humdrum.org/scripts/verovio-toolkit.js
 #notationurl: /scripts/humdrum-notation-plugin.js
 notationurl: https://plugin.humdrum.org/scripts/humdrum-notation-plugin.js
 
+# Where the humdrum.js file is loaded from:
+#humdrumjsurl: /scripts/humdrum.js
+#humdrumjsurl: https://js.humdrum.org/scripts/humdrum.js
 
 

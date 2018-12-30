@@ -1,0 +1,52 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@METHOD:	getText
+@ACCESS:	public
+@RETURN:	string
+@PARAMETERS:	void
+@FILE:		components/HumdrumLine.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	stringify
+@SHORTDESC:	Returns the <span class="var">text</span> content of the object.
+@LONGDESC:	
+
+The <span class="func">getText</span> function returns the contents
+of the <span class="var">text</span> property of the object.  If <span
+class="var">text</span> is undefined, invalid, or null, this function
+will return an empty string.
+
+The function is similar to <span class="func">stringify</span>,
+with the difference being that this function will not alter <span
+class="var">text</span>, while <span class="func">stringify</span> will
+rebuild <span class="var">text</span> based on the contents of <span
+class="obj s">HumdrumToken</span> in the <span class="var">fields</span>
+array.
+
+@@BEGIN: EXAMPLE
+@TITLE: Extracting a text line from a Humdrum object.
+@DESCRIPTION:
+This example demonstrates how to extract the text string of a <span
+class="obj">HumdrumLine</span> in a Humdrum object.  Line index 22 is
+extracted from a file and then the text content of the line is printed
+to the console.
+@CODE:
+var h = new Humdrum;
+h.onload = function (x) {
+	console.log(x.getLine(22).getText());
+};
+h.parse("h://chor/chor001.krn");
+@OUTPUT:
+4G	4B	4d	2g
+@POSTDESC:
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-getText.js -%}
+
+@@END:	FunctionDocumentation
+
+

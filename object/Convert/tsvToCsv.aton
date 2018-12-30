@@ -1,0 +1,40 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	Convert
+@METHOD:	tsvToCsv
+@ACCESS:	public
+@PARAMETERS:	tsv-formatted-string
+@RETURN:	csv-formatted-string
+@FILE:		components/Convert.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	csvToTsv
+@SHORTDESC:	Convert a TSV string into a CSV string.
+@LONGDESC:	
+
+The <span class="function">tsvToCsv</span> function converts a TSV
+(tab-separate-value) string into a CSV (comma-separated-value) string.
+Humdrum data is typically stored in TSV format.  This function is used
+to convert Humdrum data into CSV of cases where that may be needed.
+
+
+@@BEGIN: EXAMPLE
+@TITLE: Basic example for converting TSV string into CSV string.
+@DESCRIPTION:
+	The input consists of four fields separated by a single tab
+	character.  The output will be similar, but use commas
+	instead of tabs.
+@CODE:
+var input = "a\tb\tc\td";
+Convert.prototype.tsvToCsv(input)
+@OUTPUT:
+"a,b,c,d"
+@@END:	EXAMPLE
+@SRCCODE:
+{% include humdrum-js/Convert-tsvToCsv.js -%}
+
+@@END:	FunctionDocumentation
+
+

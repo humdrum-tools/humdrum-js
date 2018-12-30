@@ -1,24 +1,73 @@
+---
+---
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
 @METHOD:	parse
 @ACCESS:	public
-@RETURN:	
-@PARAMETERS:	
-@FILE:		
+@RETURN:	this
+@PARAMETERS:	string
+@PARAMETERS:	string, options
+@FILE:		HumdrumLine.js
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
+@SEEALSO:	stringify
 @SHORTDESC:	Load a string into the HumdrumLine object's contents.
 @LONGDESC:	
 
+The <span class="func">parse</span> function is used to load data
+into a <span class="obj">HumdrumLine</span> object.  Typically this function 
+is used autmatically by <span class="objfunc">HumdrumBase.parse</span>, so
+it should rarely need to be used otherwise.
+
+# Options #
+
+An options parsing object may be included in the input arguments.
+
+## options.format ##
+
+If <span class="param">options.format</span> is set to <span
+class="pval">csv</span> or <span class="pval">CSV</span>, meaning
+"comma-separated-values", then commas separate token fields in the data
+rather than the default tab characters.  Null tokens are still represented
+by <span class="pval">.</span>, and multiple empty fields between tokens
+are allowed so that primary spine data can be aligned by column.
+
+
+
 @@BEGIN: EXAMPLE
+@TITLE: Load a tab-delimited string.
 @DESCRIPTION:
+This example loads a string containg four fields separated by
+tab characters.  The parsing process will generate an array of
+four <span class="obj">HumdrumToken</span> objects in the <span
+class="var">fields</span> property, and also initialize state variables
+that are used by the object (these are not set to anything interesting
+since the object is created in isolation of a larger Humdrum data object).
 @CODE:
+var line = new HumdrumLine();
+line.parse("a\tb\tc\td")
 @OUTPUT:
+HumdrumLine {
+   text: "a	b	c	d", fields: Array(4), nextLine: null, prevLine: null, hasSpines: true, …}
+   fields: Array(4)
+      0: HumdrumToken {text: "a", tabCount: 1, owner: HumdrumLine, subTokens: Array(0)}
+      1: HumdrumToken {text: "b", tabCount: 1, owner: HumdrumLine, subTokens: Array(0)}
+      2: HumdrumToken {text: "c", tabCount: 1, owner: HumdrumLine, subTokens: Array(0)}
+      3: HumdrumToken {text: "d", tabCount: 0, owner: HumdrumLine, subTokens: Array(0)}
+      length: 4
+      __proto__: Array(0)
+   hasSpines: true
+   lineType: "Data"
+   nextLine: null
+   owner: null
+   prevLine: null
+   text: "a	b	c	d"
+   __proto__: Object
 @@END:	EXAMPLE
 
 @SRCCODE:
+{% include humdrum-js/HumdrumLine-parse.js -%}
 
 @@END:	FunctionDocumentation
 

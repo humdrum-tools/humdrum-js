@@ -10,16 +10,7 @@
 // the Humdrum JS library. It inherits from HumdrumTool.
 //
 
-//////////////////////////////
-//
-// Humdrum::initializer -- Create a Humdrum object.
-//
+{% include humdrum-js/Humdrum-Humdrum.js -%}
 
-function Humdrum(text) {
-	HumdrumTool.call(this, text);
-	return this;
-}
-
-Humdrum.prototype = Object.create(HumdrumTool.prototype);
 
 

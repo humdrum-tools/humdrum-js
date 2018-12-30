@@ -1,0 +1,30 @@
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumToken
+@METHOD:	getText
+@ACCESS:	public
+@RETURN:	string
+@PARAMETERS:	void
+@FILE:		component/HumdrumToken.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	
+@SHORTDESC:	Return the string representation of the token.
+@LONGDESC:	
+	The <span class="func">getText</span> function returns
+	the contents of <span class="var">text</span> property
+	if it exists and is valid; otherwise, an empty string
+	will be returned;
+
+
+@@BEGIN: EXAMPLE
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@@END:	EXAMPLE
+
+@SRCCODE:
+
+@@END:	FunctionDocumentation
+
+

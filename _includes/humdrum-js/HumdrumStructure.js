@@ -13,16 +13,8 @@
 // the Humdrum data.
 //
 
-//////////////////////////////
-//
-// Humdrum::initializer -- Create a Humdrum object.
-//
 
-function HumdrumStructure(text) {
-	HumdrumBase.call(this, text);
-	return this;
-}
+{% include humdrum-js/HumdrumStructure-HumdrumStructure.js %}
 
-HumdrumStructure.prototype = Object.create(HumdrumBase.prototype);
 
 

@@ -13,16 +13,7 @@
 // analysis of the Humdrum data content.
 //
 
-//////////////////////////////
-//
-// HumdrumTool::initializer -- Create a HumdrumTool object.
-//
+{% include humdrum-js/HumdrumTool-HumdrumTool.js -%}
 
-function HumdrumTool(text) {
-	HumdrumContent.call(this, text);
-	return this;
-}
-
-HumdrumTool.prototype = Object.create(HumdrumContent.prototype);
 
 

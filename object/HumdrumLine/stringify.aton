@@ -1,16 +1,68 @@
+---
+---
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
 @METHOD:	stringify
 @ACCESS:	public
-@RETURN:	
-@PARAMETERS:	
-@FILE:		
+@RETURN:	string
+@PARAMETERS:	void
+@PARAMETERS:	options
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
+@SEEALSO:	getText
 @SHORTDESC:	Convert object to plain text.
 @LONGDESC:	
+
+The <span class="func">stringify</span> function converts a <span
+class="obj">HumdrumLine</span> object into a text string, intended to
+be output as part of a multi-line Humdrum data string along with other
+<span class="obj s">HumdrumLine</span>.  A by-product of the stringification
+process is that the <span class="var">text</span> property for the object
+is set to the output of this function.  This can be used to update the
+<span class="var">text</span> of the object if the text of any of its
+<span class="obj s">HumdrumToken</span> changes.
+
+The output string will be built from the <span class="objfunc"
+objlink="HumdrumToken/#stringify">stringification</a> of the <span
+class="obj">HumdrumToken</span> objects stored in the <span class="var
+arr">fields</span> array.  If the <span class="obj">HumdrumLine</span>
+object does not contain spined data, there will be a single <span
+class="obj">HumdrumToken</span> object that contains the full text
+of the line (for global comments, for example).  <span class="obj
+s">HumdrumLine</span> that represent an empty line will have no
+<span class="obj s">HumdrumToken</span> in the their <span class="var
+arr">fields</span> array.  and the output text will be an empty line.
+
+# Options #
+
+An optional <span class="param">options</span> object can be given
+as input to the function.  If no argument is given, the output will
+be in a TSV format, using the same number of tabs between tokens
+as the input (if there are multiple spines on the line).  
+
+## options.format ##
+
+If <span class="param">options.format</span> is set to <span class="pval">csv</span> (or
+<span calss="pval">CSV</span>), then the output string will be in the CSV format (comma
+separated values).  This form of Humdrum data is useful for loading into
+software systems that understand CSV and not TSV (tab separated values),
+which is the default field separation for Humdrum data files.  Also,
+CSV can be used for cases where the tabs would be <a target="_blank"
+href="https://en.wikipedia.org/wiki/Mung_(computer_term)">munged</a>,
+such as in an email.  Note that Humdrum CSV data can be loaded into
+<a target="_blank" href="http://verovio.humdrum.org">VHV</a> and then
+typing the command alt-u (option-u on macs) will toggle the data between
+TSV and CSV formats.
+
+## options.separation ##
+
+The <span class="param">options.separation</span> option can be used to
+control the separator count between spine fields on a line.  By default,
+the separation count will be the same as when the 
+
+
 
 @@BEGIN: EXAMPLE
 @DESCRIPTION:
@@ -19,6 +71,7 @@
 @@END:	EXAMPLE
 
 @SRCCODE:
+{% include humdrum-js/HumdrumLine-stringify.js -%}
 
 @@END:	FunctionDocumentation
 
