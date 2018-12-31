@@ -3,24 +3,29 @@
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
-@METHOD:	hasSpines
+@CATEGORY:	
+@METHOD:	isRef
 @ACCESS:	public
-@RETURN:	
+@RETURN:	boolean
 @PARAMETERS:	
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
-@SHORTDESC:	Boolean for if the line has token data.
+@SEEALSO:	getLineType
+
+@SHORTDESC:	Returns true if the line is a (global) reference record or a universal reference record.
 @LONGDESC:	
 
+
 @@BEGIN: EXAMPLE
+@TITLE:		
 @DESCRIPTION:
 @CODE:
 @OUTPUT:
 @@END:	EXAMPLE
 
 @SRCCODE:
+{% include humdrum-js/HumdrumLine-getLineType.js -%}
 
 @@END:	FunctionDocumentation
 

@@ -3,24 +3,54 @@
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
+@CATEGORY:	variable
 @METHOD:	lineType
 @ACCESS:	public
-@RETURN:	
+@RETURN:	string enumerating the primary line type
 @PARAMETERS:	
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
-@SHORTDESC:	The basic type of line.
+
+@SEEALSO:	hasSpines
+
+@SEEALSO:	getLineType
+@SEEALSO:	isEmpty
+@SEEALSO:	isRefRecord
+@SEEALSO:	isUniversalRefRecord
+@SEEALSO:	isUniversalComment
+@SEEALSO:	isUniversal
+@SEEALSO:	isGlobal
+@SEEALSO:	isGlobalComment
+@SEEALSO:	isLocalComment
+@SEEALSO:	isInterpretation
+@SEEALSO:	isData
+@SEEALSO:	isBarline
+
+@SHORTDESC:	The basic category type of the line.
 @LONGDESC:	
 
+The <span class="var">lineType</span> property stores the basic category
+of line type contained in the object.  Here is a list of the allowed types:
+
+{% include_relative linetypes.md %}
+
+
+It is preferable to use the <span class="func">getLineType</span>
+function to access this property.  Altering the automatically assigned
+value for the property will mess up the accessor functions that use
+this property.
+
+
 @@BEGIN: EXAMPLE
+@TITLE:		
 @DESCRIPTION:
 @CODE:
 @OUTPUT:
 @@END:	EXAMPLE
 
 @SRCCODE:
+{% include humdrum-js/HumdrumLine-parse.js -%}
 
 @@END:	FunctionDocumentation
 

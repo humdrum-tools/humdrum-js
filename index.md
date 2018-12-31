@@ -2,6 +2,7 @@
 title: 
 ---
 {% include header.html %}
+{% include mainpage-toc.html %}
 
 This website documents the humdrum-js library, which consists of several
 [JavaScript objects](/object) for parsing digital music scores in the

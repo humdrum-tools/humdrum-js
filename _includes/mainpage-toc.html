@@ -1,0 +1,30 @@
+
+
+<script>
+// vim: ts=3
+
+console.log("YYY");
+
+document.addEventListener("DOMContentLoaded", function () {
+console.log("III");
+	var banner = document.querySelector("#banner");
+	if (!banner) {
+		return;
+	}
+	var title = banner.querySelector("#page-title");
+	if (!title) {
+		return;
+	}
+console.log("JJJ");
+	title.style.fontSize = "1.25rem";
+	title.style.marginBottom = "10px";
+	var output = "";
+	output += "<a href='/object/'>Object documentation</a>";
+	output += " | ";
+	output += "<a href='/topic/'>Topics</a>";
+	title.innerHTML = output;
+});
+
+console.log("XXX");
+
+</script>

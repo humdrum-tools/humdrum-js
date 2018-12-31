@@ -4,17 +4,27 @@
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
 @METHOD:	text
+@CATEGORY:	variable
 @ACCESS:	public
-@RETURN:	
+@RETURN:	string
 @PARAMETERS:	
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
-@SHORTDESC:	The pre-parsed text for the data line stored in the object.
+@SEEALSO:	getText
+@SEEALSO:	stringify
+@SHORTDESC:	The pre-parsed text for the Humdrum data line stored in the object.
 @LONGDESC:	
 
+The <span class="var">text</span> property contains input string used
+when parsing the contents of a Humdrum data line.  The property is
+updated with the contents of <span class="obj s">HumdrumToken</span>
+stored in the <span class="var">fields</span> array when <span
+class="func">stringify</span> is called.
+
+
 @@BEGIN: EXAMPLE
+@TITLE:		
 @DESCRIPTION:
 @CODE:
 @OUTPUT:

@@ -1,5 +1,5 @@
 ---
-title: "Object reference documentation"
+title: "Object documentation"
 breadcrumbs: objects
 github: https://github.com/humdrum-tools/humdrum-js/master/_includes/humdrum-js
 vim: ft=text
@@ -16,7 +16,7 @@ that object.
 
 
 
-# Primary objects #
+# Main objects #
 
 Here are a list of the most useful objects.  The main interface when
 working with Humdrum data is the [Humdrum](/object/Humdrum) object, but

@@ -258,9 +258,7 @@ pre.output-example {
 			</span>
 			</summary>
 			<div style="margin-left:40px; margin-bottom:20px;">
-				{{#if PARAMETERS }}
-					{{{printDeclarations this}}}
-				{{/if}}
+				{{{printDeclarations this}}}
 				<br/>
 				{{{addp LONGDESC}}}
 				{{{showExamples EXAMPLE}}}
@@ -463,8 +461,8 @@ Handlebars.registerHelper('codeLink', function (method, file, linerange,
    if (!file.match(/^\s*$/)) {
 		output += '<details class="srccode">\n';
 		output += '<summary>\n';
-		// output += 'Source code for ' + method 
-		output += 'Source code for the function '
+		// output += '<b>Source code</b> for ' + method 
+		output += '<b>Source code</b> for the function '
 		output += ' (or view in javascript source file <a target="code" href="' + url;
 		output += '">online ';
    	output += '</a>)\n';
@@ -520,7 +518,7 @@ Handlebars.registerHelper('printDeclarations', function (entry) {
 
    if (entry.PARAMETERS instanceof Array) {
 		for (var i=0; i<entry.PARAMETERS.length; i++) {
-   		output += '<span style="color:#000088; font-weight:500;">';
+   		output += '<span style="color:#000088; font-style:italic; font-weight:500;">';
 			/* list reutrn values as separate entries for javascript
 			if (entry.RETURN instanceof Array) {
 				output += entry.RETURN[i];
@@ -529,48 +527,71 @@ Handlebars.registerHelper('printDeclarations', function (entry) {
 			}
 			*/
 			output += ' ';
-			output += '<span class="docslot-long-title pre-dot">';
-   		output += entry.METHOD;
-			output += '</span>';
-			output += '(';
-			if (!entry.PARAMETERS[i].match(/^\s*void\s*$/)) {
-				output += "<i>" + entry.PARAMETERS[i] + "</i>";
+			if (entry.CATEGORY && entry.CATEGORY.match(/variable/)) {
+				output += '<span class="func">';
+   			output += entry.METHOD;
+				output += '</span>';
+			} else {
+				output += '<span class="docslot-long-title pre-dot">';
+   			output += entry.METHOD;
+				output += '</span>';
+				output += '(';
+				if (!entry.PARAMETERS[i].match(/^\s*void\s*$/)) {
+					output += "<i>" + entry.PARAMETERS[i] + "</i>";
+				}
+				output += ')';
 			}
-			output += ')';
    		output += '</span>';
    		output += '</br>';
 		}
 
 	} else {
-   	output += '<span style="color:#000088; font-weight:500;">';
-		/*
-		if (entry.RETURN instanceof Array) {
-			output += entry.RETURN[0];
+		if (entry.CATEGORY && entry.CATEGORY.match(/variable/)) {
+			output += '<span class="var';
+			if (entry.RETURN) {
+				if (Array.isArray(entry.RETURN)) {
+					if (entry.RETURN[0].match(/array/)) {
+						output += " arr";
+					}
+				} else if (entry.RETURN.match(/array/)) {
+					output += " arr";
+				}
+			}
+			output += '">';
+			output += entry.METHOD;
+			output += '</span>';
 		} else {
-			output += entry.RETURN;
+   		output += '<span style="color:#000088; font-style:italic; font-weight:500;">';
+			output += ' ';
+			output += '<span class="docslot-long-title pre-dot">';
+   		output += entry.METHOD;
+			output += '</span>';
+			output += '(';
+			if (!entry.PARAMETERS.match(/^\s*void\s*$/)) {
+				output += "<i>" + entry.PARAMETERS + "</i>";
+			}
+			output += ')';
+   		output += '</span>';
 		}
-		*/
-		output += ' ';
-		output += '<span class="docslot-long-title pre-dot">';
-   	output += entry.METHOD;
-		output += '</span>';
-		output += '(';
-		if (!entry.PARAMETERS.match(/^\s*void\s*$/)) {
-			output += "<i>" + entry.PARAMETERS + "</i>";
-		}
-		output += ')';
-   	output += '</span>';
    	output += '</br>';
 	}
 
 	if (entry.RETURN instanceof Array) {
 		for (i=0; i<entry.RETURN.length; i++) {
-			output += "<b>Return type:</b> ";
+			if (entry.CATEGORY && entry.CATEGORY.match(/variable/)) {
+				output += "<b>Data type:</b> ";
+			} else {
+				output += "<b>Return type:</b> ";
+			}
 			output += getReturnInfo(entry.RETURN[i]);
 			output += "<br/>";
 		}
 	} else if (entry.RETURN) {
-		output += "<b>Return type:</b> ";
+		if (entry.CATEGORY && entry.CATEGORY.match(/variable/)) {
+			output += "<b>Data type:</b> ";
+		} else {
+			output += "<b>Return type:</b> ";
+		}
 		output += getReturnInfo(entry.RETURN);
 		output += "<br/>";
 	}
@@ -671,7 +692,7 @@ Handlebars.registerHelper('showExamples', function (entry) {
 			output += '</li>\n';
 		}
 		output += '</ol>\n';
-	} else if (!entry.DESCRIPTION.match(/^\s*$/)) {
+	} else if (!entry.TITLE.match(/^\s*$/)) {
 	   output = '<details class="example-details">';
 		output += '<summary style="margin-bottom:5px;">';
 		output += '<span style="font-weight:700">Example:</span> ';

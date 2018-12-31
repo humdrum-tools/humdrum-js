@@ -3,16 +3,19 @@
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
-@METHOD:	owner
+@CATEGORY:	
+@METHOD:	isGlobalComment
 @ACCESS:	public
-@RETURN:	
+@RETURN:	boolean
 @PARAMETERS:	
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
-@SHORTDESC:	Reference to the HumdrumBase object that contains this object.
+@SEEALSO:	getLineType
+
+@SHORTDESC:	Returns true if the line is a global comment.
 @LONGDESC:	
+
 
 @@BEGIN: EXAMPLE
 @TITLE:		
@@ -22,6 +25,7 @@
 @@END:	EXAMPLE
 
 @SRCCODE:
+{% include humdrum-js/HumdrumLine-getLineType.js -%}
 
 @@END:	FunctionDocumentation
 

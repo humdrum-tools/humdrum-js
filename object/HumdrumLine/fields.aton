@@ -3,18 +3,31 @@
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
+@CATEGORY:	variable
 @METHOD:	fields
 @ACCESS:	public
-@RETURN:	
+@RETURN:	array of <span class="obj s">HumdrumToken</span>
 @PARAMETERS:	
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
-@SHORTDESC:	Data fields of line (tokens or global/reference records).
+@SEEALSO:	getToken
+@SHORTDESC:	Data fields in line (tokens or global/reference records).
 @LONGDESC:	
 
+The <span class="var arr">fields</span> array stores the tokens for a
+Humdrum data line, as <span class="obj">HudrumToken</span> objects.
+If a data line does not normally contain data tokens, such as global
+comments, the entire line is treated as a token and stored in <span
+class="var">fields</span> array.  Empty lines are stored as 
+empty <span class="obj s">HumdrumToken</span>, which are different
+from null tokens (which would contain "<span class="pval">.</span>").
+
+
+
+
 @@BEGIN: EXAMPLE
+@TITLE:		
 @DESCRIPTION:
 @CODE:
 @OUTPUT:

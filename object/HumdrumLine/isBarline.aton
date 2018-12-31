@@ -1,0 +1,58 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@CATEGORY:	
+@METHOD:	isBarline
+@ACCESS:	public
+@RETURN:	boolean
+@PARAMETERS:	
+@FILE:		components/HumdrumLine.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	getLineType
+
+@SHORTDESC:	Returns true if the line is a barline.
+@LONGDESC:	
+
+The <span class="func">isBarline</span> function will return true
+if the <span class="obj">HumdrumLine</span> is a barline, or false otherwise.
+Lines that start with an equals sign (=) are barlines.
+
+@@BEGIN: EXAMPLE
+@TITLE:		Test of the <span class="func">isBarline</span> function.
+@DESCRIPTION:
+	Loading a Bach chorale, then checking if a data line is a barline, and
+	then checking if a barline is a barline.
+@CODE:
+var h = new Humdrum;
+h.onload = function (x) {
+	console.log("Checking if line index 45 is a barline:");
+	console.log(x.getLine(45).getText());
+	console.log(x.getLine(45).getLineType());
+	console.log(x.getLine(45).isBarline());
+
+	console.log("Checking if line index 45 is a barline:");
+	console.log(x.getLine(44).getText());
+	console.log(x.getLine(44).getLineType());
+	console.log(x.getLine(44).isBarline());
+};
+h.parse("h://chor/chor001.krn");
+@OUTPUT:
+Checking if line index 45 is a barline:
+4BB	4d	2g	4b
+Data
+false
+Checking if line index 45 is a barline:
+=6	=6	=6	=6
+Barline
+true
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-getLineType.js -%}
+
+@@END:	FunctionDocumentation
+
+

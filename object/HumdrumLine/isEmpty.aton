@@ -1,0 +1,50 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@CATEGORY:	
+@METHOD:	isEmpty
+@ACCESS:	public
+@RETURN:	boolean
+@PARAMETERS:	
+@FILE:		components/HumdrumLine.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	getLineType
+
+@SHORTDESC:	Returns true if the line is empty.
+@LONGDESC:	
+
+If a data line in some Humdrum data is empty, the <span class="func">isEmpty</span>
+function will return true; otherwise, if there is any text on the line the
+function will return false;
+
+
+@@BEGIN: EXAMPLE
+@TITLE:		Check to see if any lines in a <span class="obj">Humdrum</span> object are empty.
+
+@DESCRIPTION:
+
+@CODE:
+var h = new Humdrum;
+h.onload = function (x) {
+	console.log(x.getLines().every(function(y) { return !y.isEmpty() }));
+}
+h.parse("h://chor/chor001.krn");
+@OUTPUT:
+true
+@POSTDESC:
+The <span class="func">every</span> function check an array to see if all 
+elements satify the given condition.  In this case every line in the Humdrum file
+is checked to see if it is not empty.  The results is "true", which means that
+there are no empty lines in the data.
+
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-getLineType.js -%}
+
+@@END:	FunctionDocumentation
+
+

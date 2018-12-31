@@ -1,0 +1,60 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@CATEGORY:	
+@METHOD:	getLineType
+@ACCESS:	public
+@RETURN:	string enumerating the primary line type.
+@PARAMETERS:	
+@FILE:		
+@ALIAS:		
+@LINES:		
+@SEEALSO:	isBarline
+@SEEALSO:	isComment
+@SEEALSO:	isData
+@SEEALSO:	isEmpty
+@SEEALSO:	isGlobal
+@SEEALSO:	isGlobalComment
+@SEEALSO:	isInterpretation
+@SEEALSO:	isLocalComment
+@SEEALSO:	isRef
+@SEEALSO:	isRefRecord
+@SEEALSO:	isUniversal
+@SEEALSO:	isUniversalComment
+@SEEALSO:	isUniversalRefRecord
+@SEEALSO:	lineType
+
+@SHORTDESC:	Returns true if the line is empty.
+@LONGDESC:	
+
+The <span class="func">getLineType</span> function returns the basic
+category that the line belongs to:
+
+{% include_relative linetypes.md %}
+
+
+@@BEGIN: EXAMPLE
+@TITLE: Basic demonstration of the <span class="func">getLineType</span> function.
+@DESCRIPTION: 
+This example load a Bach chorale, then prints line index 45 to the console,
+and then prints the line type for line index 45 to the console.
+@CODE:
+var h = new Humdrum;
+h.onload = function (x) {
+	console.log(x.getLine(45).getText());
+	console.log(x.getLine(45).getLineType());
+};
+h.parse("h://chor/chor001.krn");
+@OUTPUT:
+4BB	4d	2g	4b
+Data
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-getLineType.js -%}
+
+@@END:	FunctionDocumentation
+
+

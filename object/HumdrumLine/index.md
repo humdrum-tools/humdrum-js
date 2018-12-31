@@ -45,11 +45,18 @@ class="obj s">HumdrumToken</span> contained in the object.
 
 <br/>
 
-# Variables #
+# Line-type functions #
 
-State variables of a <span class="obj">HumdrumLine</span> object.  Prefer
-using the above functions to access or modify these variables unless you
-know what your are doing.
+{% include docslot/HumdrumLine_linetypes.html %}
+
+
+<br/>
+
+# State variables #
+
+These properties are used to manage the <span
+class="obj">HumdrumLine</span> object.  Prefer using the above functions
+to access or modify these variables unless you know what your are doing.
 
 {% include docslot/HumdrumLine_variables.html %}
 

@@ -3,18 +3,28 @@
 @@BEGIN:	FunctionDocumentation
 @INDEXED:	yes
 @CLASSNAME:	HumdrumLine
+@CATEGORY:	variable
 @METHOD:	prevLine
 @ACCESS:	public
-@RETURN:	
+@RETURN:	HumdrumLine reference
+@RETURN:	null (if no previous line)
 @PARAMETERS:	
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
+@SEEALSO:	getPrevLine
 @SHORTDESC:	Reference to the previous line in the Humdrum data.
 @LONGDESC:	
 
+The <span class="var">prevLine</span> property contians a reference
+to the previous <span class="obj">HumdrumLine</span> in a <span
+class="obj">Humdrum</span> data object.  If there is no previous line, then
+this value will be null.  If the <span class="obj">HumdrumLine</span>
+was created outside of a <span class="obj">Humdrum</span> data object,
+then <span class="var">prevLine</span> will also be null.
+
 @@BEGIN: EXAMPLE
+@TITLE:		
 @DESCRIPTION:
 @CODE:
 @OUTPUT:

@@ -15,6 +15,7 @@
 // * HumdrumBase::clear()                   = Intialize variables for object.
 // * HumdrumBase::parse()                   = Create obj. from input string, URL, URI, element, selector.
 // * HumdrumBase::getLineCount()            = Return the number of line records in data.
+// * HumdrumBase::getLines()                = Return an array of all HumdrumLine objects contained in the object.
 // * HumdrumBase::getLine()                 = Return a HumdrumLine object.
 // * HumdrumBase::analyzeRefRecords()       = Create reference record database object.
 // * HumdrumBase::stringify()               = Convert object to plain text.
@@ -60,6 +61,7 @@
 {% include humdrum-js/HumdrumBase-parse.js -%}
 {% include humdrum-js/HumdrumBase-getLineCount.js -%}
 {% include humdrum-js/HumdrumBase-getLine.js -%}
+{% include humdrum-js/HumdrumBase-getLines.js -%}
 {% include humdrum-js/HumdrumBase-analyzeRefRecords.js -%}
 
 ///////////////////////////////////////////////////////////////////////////

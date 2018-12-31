@@ -1,0 +1,40 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@METHOD:	spines
+@CATEGORY:	variable
+@ACCESS:	public
+@RETURN:	boolean
+@PARAMETERS:	
+@FILE:		
+@ALIAS:		
+@LINES:		
+@SEEALSO:	hasSpines
+@SHORTDESC:	Boolean for if the line has token data.
+@LONGDESC:	
+
+If this variable is set to true, then the line contains
+true tokens in the <span class="var arr">fields</span> array.
+When the variable is set to false, that means that the line
+is a global comment or related line type, such as reference records.
+In this case the <span class="var arr">fields</span> array
+will contain exactly one pseudo-<span class="obj">HumdrumToken</span>
+object, which containts the text of the entire line.  It is preferable
+to use the <span class="func">hasSpines</span> function to access
+this property.
+
+
+@@BEGIN: EXAMPLE
+@TITLE:		
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@@END:	EXAMPLE
+
+@SRCCODE:
+
+@@END:	FunctionDocumentation
+
+

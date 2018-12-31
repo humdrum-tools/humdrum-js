@@ -28,7 +28,7 @@ HumdrumLine.prototype.parse = function (linetext) {
 			this.lineType = "RefRecord";
 		} else if (this.text.match(/^!!!![^!:][^:]*:/)) {
 			this.lineType = "UniversalRefRecord";
-		} else if (this.text.match(/^!!!!/)) {
+		n} else if (this.text.match(/^!!!/)) {
 			this.lineType = "UniversalComment";
 		} else {
 			this.lineType = "GlobalComment";
