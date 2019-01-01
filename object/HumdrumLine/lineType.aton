@@ -18,7 +18,6 @@
 @SEEALSO:	isEmpty
 @SEEALSO:	isRefRecord
 @SEEALSO:	isUniversalRefRecord
-@SEEALSO:	isUniversalComment
 @SEEALSO:	isUniversal
 @SEEALSO:	isGlobal
 @SEEALSO:	isGlobalComment

@@ -8,20 +8,105 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType
-
-@SHORTDESC:	Returns true if the line is either a universal comment, a global comment or a local comment.
+@SHORTDESC:	Returns true if the line is a comment.
 @LONGDESC:	
+
+The <span class="func">isComment</span> function will return true if the
+<span class="obj">HumdrumLine</span> is a comment or false otherwise.
+Any line starting with an exclamation mark (!) is considered a comment
+unless it can be categorized as a (universal) reference record.
+
+Lines starting with a single "!" followed by anything else other than
+another exclamation mark are local comments that are included within the
+spine structure of the Humdrum data.  Lines starting with two or more exclamation
+marks are outside of the spine structure.  There are three basic category
+labels applied to these by the <span class="fun">getLineType</span>
+function: "RefRecord", "UniversalRefRecord" and "GlobalComment".
+The <span class="func">isComment</span> considers "GlobalComment"
+line types to be comments, but does not include the reference records
+eventhough they start with an exclamation mark.
+
+Lines starting with exactly two exclamation marks are
+plain global comments.  Lines starting with three exclamation marks
+followed by a key the a colon (:) and then a value for the key are
+considered reference records. Adding an extra exclamation mark in front
+of a reference record will convert it into a universal reference record,
+meaning that it applies to all data segments in a collection of Humdrum
+data movements/works.  Any other configuration of exclamation marks
+at the start of the line are currently categoried as global comments,
+although further categorization may be done in the future (to define
+universal comments, for example).
+
+
+{% capture commentable %}
+line type            | <span class="func">isComment</span> | example | meaning 
+---------------------|----------|---------|-------------------------
+`LocalComment`       | true | `!`     | A comment within the spine structure.  Each active spine token on the current line must start with one `!` and then any arbitrary text other than a tab character.
+`GlobalComment`      | true | `!!`    | A comment outside of the spine structure.  Only one comment is given on a line.  More exclamation marks are allowed (although the categorization of these may be refined in the future).
+`RefRecord`          | false | <span style="white-space:nowrap;">`!!!OTL: A title`</span> | A reference record consisting of a key/value pair.
+`UniversalRefRecord` | false | <span style="white-space:nowrap;">`!!!!OPR: Parent title`</span> |  A "universal" reference record, with the form `!!!!key: value`, which applies to multiple data segments in a <span class="obj">HumdrumSet</span>.
+{% endcapture commentable %}
+{{ commentable | markdownify }}
+
+
+# Layout parameters #
+
+{% capture quoting %}
+
+Similar to reference records, the layout parameter system is
+embedded into the Humdrum comment system.  There are local layout
+parameters embedded in local comments which start with  `!LO:` and
+global layout parameters embedded in global comments and starting
+with `!!LO:`.  These line types are considered comments by the <span
+class="func">isComment</span> function, but another function, probably
+<span class="func">getLineSubType</span>, that will identify such commands
+as layout parameters.
+
+{% endcapture quoting %}
+{{ quoting | markdownify }}
 
 
 @@BEGIN: EXAMPLE
-@TITLE:		
+@TITLE:		Test of the <span class="func">getComment</span> function.
 @DESCRIPTION:
+
+This example loads some simple Humdrum data from a string.  Then the
+Humdrum data is printed, and then each line is checked see if it is a
+comment or not.
+
 @CODE:
+var data = "!! global comment\n!!!OTL: My test data\n**data\n! local comment\nsome\ndata\nin\nthe\nspine\n*-\n";
+var h = new Humdrum(data);
+console.log(h.stringify());
+for (var i=0; i<h.getLineCount(); i++) {
+   console.log("Line", i+1, "is" + (h.getLine(i).isComment() ? "" : " not"), "a comment:", h.getLine(i).getText());
+}
 @OUTPUT:
+!! global comment
+!!!OTL: My test data
+**data
+! local comment
+some
+data
+in
+the
+spine
+*-
+
+Line 1 is a comment: !! global comment
+Line 2 is not a comment: !!!OTL: My test data
+Line 3 is not a comment: **data
+Line 4 is a comment: ! local comment
+Line 5 is not a comment: some
+Line 6 is not a comment: data
+Line 7 is not a comment: in
+Line 8 is not a comment: the
+Line 9 is not a comment: spine
+Line 10 is not a comment: *-
 @@END:	EXAMPLE
 
 @SRCCODE:

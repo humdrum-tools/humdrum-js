@@ -22,11 +22,9 @@
 @SEEALSO:	isRef
 @SEEALSO:	isRefRecord
 @SEEALSO:	isUniversal
-@SEEALSO:	isUniversalComment
 @SEEALSO:	isUniversalRefRecord
 @SEEALSO:	lineType
-
-@SHORTDESC:	Returns true if the line is empty.
+@SHORTDESC:	Returns a string describing the line type.
 @LONGDESC:	
 
 The <span class="func">getLineType</span> function returns the basic

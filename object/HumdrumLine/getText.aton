@@ -45,7 +45,7 @@ h.parse("h://chor/chor001.krn");
 @@END:	EXAMPLE
 
 @SRCCODE:
-{% include humdrum-js/HumdrumLine-getText.js -%}
+{% include humdrum-js/HumdrumLine-accessors.js -%}
 
 @@END:	FunctionDocumentation
 

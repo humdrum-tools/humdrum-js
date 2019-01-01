@@ -8,20 +8,59 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType
-
+@SEEALSO:	isComment
+@SEEALSO:	isGlobalComment
 @SHORTDESC:	Returns true if the line is a local comment.
 @LONGDESC:	
 
+The <span class="func">isLocalComment</span> function returns true if the Humdrum line is a local comment (a spined line
+starting with a single exclamation mark); otherwise, the function returns false.  
+
 
 @@BEGIN: EXAMPLE
-@TITLE:		
+@TITLE:		Basic test of the <span class="func">isLocalComment</span> function.
 @DESCRIPTION:
+
+This example loads some simple Humdrum data from a string.  Then the
+Humdrum data is printed, and then each line is checked see if it is a
+local comment or not.  Note that there are two comments in this example:
+a local comment and a global comment, and the global comment is not
+identified as a local comment by the function.
+
+
 @CODE:
+var data = "!! global comment\n!!!OTL: My test data\n**data\n! local comment\nsome\ndata\nin\nthe\nspine\n*-\n";
+var h = new Humdrum(data);
+console.log(h.stringify());
+for (var i=0; i<h.getLineCount(); i++) {
+   console.log("Line", i+1, "is" + (h.getLine(i).isLocalComment() ? "" : " not"), "a local comment:", h.getLine(i).getText());
+}
 @OUTPUT:
+!! global comment
+!!!OTL: My test data
+**data
+! local comment
+some
+data
+in
+the
+spine
+*-
+
+Line 1 is not a local comment: !! global comment
+Line 2 is not a local comment: !!!OTL: My test data
+Line 3 is not a local comment: **data
+Line 4 is a local comment: ! local comment
+Line 5 is not a local comment: some
+Line 6 is not a local comment: data
+Line 7 is not a local comment: in
+Line 8 is not a local comment: the
+Line 9 is not a local comment: spine
+Line 10 is not a local comment: *-
 @@END:	EXAMPLE
 
 @SRCCODE:

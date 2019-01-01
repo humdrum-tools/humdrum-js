@@ -15,7 +15,16 @@
 // * HumdrumLine::clear() -- Clear contents of object.
 // * HumdrumLine::parse() -- Parse an input string.
 // * HumdrumToken::stringify() -- Convert object to plain text.
-// * HumdrumToken::hasSpines() -- True if the line posses spines (not an empty line or global).
+//
+// Data accessor functions:
+//
+// * HumdrumToken::getLineIndex() -- Returns the index number of the line in HumdrumBase line array.
+// * HumdrumToken::getLineNumber() -- Return line index plus 1.
+// * HumdrumToken::getNextLine() -- Return the next line in the HumdrumBase line array.
+// * HumdrumToken::getOwner() -- Return the HumdrumBase object that contains the line.
+// * HumdrumToken::getPrevLine() -- Return the previous line in the HumdrumBase line array.
+// * HumdrumToken::getText() -- Return the TSV text of the line.
+// * HumdrumToken::isSpined() -- True if the line posses spines (not an empty line or global).
 //
 // Line-type related functions:
 //
@@ -41,7 +50,7 @@
 // * this.fields    = data fields of line (tokens or global/reference records).
 // * this.nextLine  = pointer to the next line in the file.
 // * this.prevLine  = pointer to the previous line in the file.
-// * this.spinesQ   = true if the line has token data. Based on line type:
+// * this.spineQ    = true if the line has token data. Based on line type:
 //       * RefRecord                = false
 //       * UniversalRefRecord       = false
 //       * UniversalComment         = false
@@ -65,10 +74,10 @@
 //
 
 {% include humdrum-js/HumdrumLine-HumdrumLine.js -%}
+{% include humdrum-js/HumdrumLine-accessors.js   -%}
 {% include humdrum-js/HumdrumLine-clear.js       -%}
 {% include humdrum-js/HumdrumLine-parse.js       -%}
 {% include humdrum-js/HumdrumLine-stringify.js   -%}
-{% include humdrum-js/HumdrumLine-getText.js     -%}
 {% include humdrum-js/HumdrumLine-getToken.js    -%}
 {% include humdrum-js/HumdrumLine-getLineType.js -%}
 

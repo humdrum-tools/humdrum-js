@@ -11,6 +11,7 @@
 @FILE:		
 @ALIAS:		
 @LINES:		
+@SEEALSO:	getTokens
 @SEEALSO:	getToken
 @SHORTDESC:	Data fields in line (tokens or global/reference records).
 @LONGDESC:	

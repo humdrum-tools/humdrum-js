@@ -10,7 +10,7 @@
 //   This function should not be called directly; use HumdrumBase::parse instead.
 //
 
-HumdrumBase.prototype.ParseUriGithub = function (uri, options) {
+HumdrumBase.prototype.ParseUriGithub = function (uri, opts) {
 	this.clear();
 	var tlines = uri.match(/[^\r\n]+/g);
 	if (tlines.length != 1) {
@@ -26,13 +26,13 @@ HumdrumBase.prototype.ParseUriGithub = function (uri, options) {
 		var repo    = matches[3];
 		var file    = matches[4];
 		var variant;
-		if (options && options.commitHash && (typeof options.commitHash === "string" || text instanceof String)) {
-			variant = options.commitHash;
+		if (opts && opts.commitHash && (typeof opts.commitHash === "string" || text instanceof String)) {
+			variant = opts.commitHash;
 		} else {
 			variant = "master";
 		}
 		var url = "https://raw.githubusercontent.com/" + account + "/" + repo + "/" + variant + "/" + file;
-		this.parse(url, options);
+		this.parse(url, opts);
 	} else {
 		console.log("Error: input string is not a Github URI:", uri);
 	}

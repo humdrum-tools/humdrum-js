@@ -23,13 +23,11 @@ HumdrumLine.prototype.parse = function (linetext) {
 		token = new HumdrumToken(this.text, 0);
 		token.owner = this;
 		this.fields.push(token);
-		this.hasSpines = false;
+		this.spineQ = false;
 		if (this.text.match(/^!!![^!:][^:]*:/)) {
 			this.lineType = "RefRecord";
 		} else if (this.text.match(/^!!!![^!:][^:]*:/)) {
 			this.lineType = "UniversalRefRecord";
-		n} else if (this.text.match(/^!!!/)) {
-			this.lineType = "UniversalComment";
 		} else {
 			this.lineType = "GlobalComment";
 		}
@@ -38,10 +36,10 @@ HumdrumLine.prototype.parse = function (linetext) {
 		token = new HumdrumToken(this.text);
 		token.owner = this;
 		this.fields.push(token);
-		this.hasSpines = false;
+		this.spineQ = false;
 		this.lineType  = "Empty";
 	} else {
-		this.hasSpines = true;
+		this.spineQ = true;
 		if (this.text.match(/^\*/)) {
 			this.lineType = "Interpretation";
 		} else if (this.text.match(/^\!/)) {

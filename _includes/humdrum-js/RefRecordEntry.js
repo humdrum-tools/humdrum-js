@@ -1,7 +1,7 @@
 //
 // Programmer:    Craig Stuart Sapp <craig@ccrma.stanford.edu>
 // Creation Date: Sun Dec 23 01:47:54 EST 2018
-// Last Modified: Sun Dec 23 01:47:57 EST 2018
+// Last Modified: Mon Dec 31 23:15:04 EST 2018
 // Filename:      _includes/humdrum-js/RefRecordEntry.js
 // Syntax:        JavaScript 1.8.5/ECMAScript 5.1
 // vim:           ts=3
@@ -46,6 +46,7 @@
 {% include humdrum-js/RefRecordEntry-setLineText.js -%}
 {% include humdrum-js/RefRecordEntry-parseTextLine.js -%}
 {% include humdrum-js/RefRecordEntry-AddBacklink.js -%}
+{% include humdrum-js/RefRecordEntry-accessors.js -%}
 
 
 

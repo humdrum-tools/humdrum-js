@@ -19,7 +19,7 @@ RefRecordEntry.prototype.parseTextLine = function () {
 	this.clearParsedData();
 
 	// Extract the key and value:
-	var matches = this.text.match(/^!!!([^!:][^:]*)\s*:\s*(.*)\s*$/);
+	var matches = this.getText().match(/^!!!([^!:][^:]*)\s*:\s*(.*)\s*$/);
 	if (matches) {
 		this.keyBase = matches[1];
 		this.key     = matches[1];
@@ -27,7 +27,7 @@ RefRecordEntry.prototype.parseTextLine = function () {
 	}
 
 	// Check if there are any @ markers for langauge codes:
-	matches = this.keyBase.match(/^([^@]+)(@+.*)$/);
+	matches = this.getKeyBase().match(/^([^@]+)(@+.*)$/);
 	if (matches) {
 		this.keyBase = matches[1];
 		this.keyAt = matches[2];
@@ -35,14 +35,14 @@ RefRecordEntry.prototype.parseTextLine = function () {
 	}
 
 	// Check if there are any ** markers for exclusive interpretatiosn (RDF only):
-	matches = this.keyBase.match(/^([^@]+)(\*\*[^*]+)$/);
+	matches = this.getKeyBase().match(/^([^@]+)(\*\*[^*]+)$/);
 	if (matches) {
 		this.keyBase = matches[1];
 		this.keyExinterp = matches[2];
 	}
 
 	// Check if there are any number qualifications:
-	matches = this.keyBase.match(/^(.*)(\d+)$/);
+	matches = this.getKeyBase().match(/^(.*)(\d+)$/);
 	if (matches) {
 		this.keyBase = matches[1];
 		this.keyCounter = parseInt(matches[2], 10);

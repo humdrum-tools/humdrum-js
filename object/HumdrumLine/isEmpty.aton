@@ -16,7 +16,7 @@
 @SHORTDESC:	Returns true if the line is empty.
 @LONGDESC:	
 
-If a data line in some Humdrum data is empty, the <span class="func">isEmpty</span>
+If a line in some Humdrum data is empty, the <span class="func">isEmpty</span>
 function will return true; otherwise, if there is any text on the line the
 function will return false;
 
@@ -37,8 +37,8 @@ true
 @POSTDESC:
 The <span class="func">every</span> function check an array to see if all 
 elements satify the given condition.  In this case every line in the Humdrum file
-is checked to see if it is not empty.  The results is "true", which means that
-there are no empty lines in the data.
+is checked to see if it is not empty.  The results in this case is "true", 
+which means that there are no empty lines in the data (due to the negation).
 
 @@END:	EXAMPLE
 

@@ -1,5 +1,7 @@
 ---
 title: 
+github:	github: https://github.com/humdrum-tools/humdrum-js/master/kern/_include/humdrum-js
+vim:	ft=text
 ---
 {% include header.html %}
 {% include mainpage-toc.html %}

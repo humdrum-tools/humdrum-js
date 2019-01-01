@@ -8,20 +8,121 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType
 
-@SHORTDESC:	Returns true if the line is a unversal reference record.
+@SHORTDESC:	Returns true if the line is a universal reference record.
 @LONGDESC:	
+{% capture rtext %}
+The <span class="func">isUniversalRefRecord</span> function returns true if the line contains
+a universal reference record, which is a reference record starting with four exclamation marks 
+instead of three, such as `!!!!key: value`.  These sorts of reference records are used for
+storing reference records that apply to all data segments in a file.
 
+A special universal reference record is `!!!!SEGMENT:`.  This is used to separate reference
+records and global comments between difference segments in a data stream.  Also a label
+is typically found as the value for the segment, which is used as a filename if the
+segments are split into separate files.
+
+Here is some example data using universal reference records:
+
+
+```
+!!!!COM: Anonymous
+!!!!OTL: Sonata in three movements
+!!!!SEGMENT: movement1
+!!!OMV: 1. Allegro
+**kern
+1c
+==
+*-
+!!!!SEGMENT: movement2
+!!!OMV: 2. Adagio
+**kern
+1g
+==
+*-
+!!!!SEGMENT: movement3
+!!!OMV: 3. Presto
+**kern
+1c;
+==
+*-
+```
+
+Here is the equivalent when converting the universal reference records into regular reference records:
+
+```
+!!!!SEGMENT: movement1
+!!!COM: Anonymous
+!!!OTL: Sonata in three movements
+!!!OMV: 1. Allegro
+**kern
+1c
+==
+*-
+!!!!SEGMENT: movement2
+!!!COM: Anonymous
+!!!OTL: Sonata in three movements
+!!!OMV: 2. Adagio
+**kern
+1g
+==
+*-
+!!!!SEGMENT: movement3
+!!!COM: Anonymous
+!!!OTL: Sonata in three movements
+!!!OMV: 3. Presto
+**kern
+1c;
+==
+*-
+```
+
+
+
+
+
+
+{% endcapture rtext %}
+{{ rtext | markdownify }}
 
 @@BEGIN: EXAMPLE
-@TITLE:		
+@TITLE:		Basic test of the <span class="func">isUniversalRefRecord
 @DESCRIPTION:
 @CODE:
+var data = "!!!!SEGMENT: somedata\n!! global comment\n!!!OTL: My test data\n**data\n! local comment\nsome\ndata\nin\nthe\nspine\n*-\n";
+var h = new Humdrum(data);
+console.log(h.stringify());
+for (var i=0; i<h.getLineCount(); i++) {
+   console.log("Line", i+1, "is" + (h.getLine(i).isUniversalRefRecord() ? "" : " not"), "a universal reference record:", h.getLine(i).getText());
+}
 @OUTPUT:
+!!!!SEGMENT: somedata
+!! global comment
+!!!OTL: My test data
+**data
+! local comment
+some
+data
+in
+the
+spine
+*-
+
+Line 1 is a universal reference record: !!!!SEGMENT: somedata
+Line 2 is not a universal reference record: !! global comment
+Line 3 is not a universal reference record: !!!OTL: My test data
+Line 4 is not a universal reference record: **data
+Line 5 is not a universal reference record: ! local comment
+Line 6 is not a universal reference record: some
+Line 7 is not a universal reference record: data
+Line 8 is not a universal reference record: in
+Line 9 is not a universal reference record: the
+Line 10 is not a universal reference record: spine
+Line 11 is not a universal reference record: *-
 @@END:	EXAMPLE
 
 @SRCCODE:

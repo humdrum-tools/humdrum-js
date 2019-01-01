@@ -1,0 +1,36 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@METHOD:	getOwner
+@ACCESS:	public
+@RETURN:	reference to a HumdrumBase object or null
+@PARAMETERS:	void
+@FILE:		components/HumdrumLine.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	
+@SHORTDESC:	Returns the <span class="obj">HumdrumBase</span> object that contains the line.
+@LONGDESC:	
+
+The <span class="func">getOwner</span> function returns a 
+reference to the <span class="obj">HumdrumBase</span> object
+that contains the line.  If the object was created in isolation,
+null will be returned.
+
+
+@@BEGIN: EXAMPLE
+@TITLE:
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@POSTDESC:
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-accessors.js -%}
+
+@@END:	FunctionDocumentation
+
+

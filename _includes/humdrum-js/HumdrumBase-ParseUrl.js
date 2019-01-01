@@ -31,7 +31,18 @@ HumdrumBase.prototype.ParseUrl = function (url, options) {
 		request.open("GET", matches[1]);
 		request.send();
 	} else {
-		console.log("Error: input string is not a Humdrum URI:", url);
+		// A relative URL address: just do the same thing:
+		request = new XMLHttpRequest();
+		(function (that) {
+			request.onload = function () {
+				that.parse(this.responseText, options);
+				if (typeof that.onload === "function") {
+					that.onload(that);
+				}
+			};
+		})(this);
+		request.open("GET", url.trim());
+		request.send();
 	}
 	return this;
 };

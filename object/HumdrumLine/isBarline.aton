@@ -33,7 +33,7 @@ h.onload = function (x) {
 	console.log(x.getLine(45).getLineType());
 	console.log(x.getLine(45).isBarline());
 
-	console.log("Checking if line index 45 is a barline:");
+	console.log("Checking if line index 44 is a barline:");
 	console.log(x.getLine(44).getText());
 	console.log(x.getLine(44).getLineType());
 	console.log(x.getLine(44).isBarline());

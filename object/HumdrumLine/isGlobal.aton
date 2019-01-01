@@ -8,20 +8,66 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType
-
-@SHORTDESC:	Returns true if the line line starts with two exclamation marks.
+@SEEALSO:	isEmpty
+@SEEALSO:	hasSpines
+@SEEALSO:	isGlobalComment
+@SEEALSO:	isLocalComment
+@SHORTDESC:	Returns true if the line line starts with two or more exclamation marks.
 @LONGDESC:	
+
+The <span class="func">isGlobal</span> function returns true if the line
+is either a global comment or a reference record.
+
+You may also need to consider empty lines, which return true with the
+<span class="func">isEmpty</span> function.  These are not considered
+global lines, but they are also not local (spined) lines either. If you
+want to include empty lines in your check of a line type, use the <span
+class="func">hasSpines</span> fuction, which returns false if either
+<span class="func">isGlobal</span> or <span class="func">isEmpty</span>
+returns true.
 
 
 @@BEGIN: EXAMPLE
-@TITLE:		
+@TITLE:		Basic check of the <span class="func">isGlobal</span> function.
 @DESCRIPTION:
+
+This example loads some simple Humdrum data from a string.  Then the
+Humdrum data is printed and then each line is checked see if it is a
+global line or not.
+
 @CODE:
+var data = "!! global comment\n!!!OTL: My test data\n**data\n! local comment\nsome\ndata\nin\nthe\nspine\n*-\n";
+var h = new Humdrum(data);
+console.log(h.stringify());
+for (var i=0; i<h.getLineCount(); i++) {
+   console.log("Line", i+1, "is" + (h.getLine(i).isGlobal() ? "" : " not"), "global:", h.getLine(i).getText());
+}
 @OUTPUT:
+!! global comment
+!!!OTL: My test data
+**data
+! local comment
+some
+data
+in
+the
+spine
+*-
+
+Line 1 is global: !! global comment
+Line 2 is global: !!!OTL: My test data
+Line 3 is not global: **data
+Line 4 is not global: ! local comment
+Line 5 is not global: some
+Line 6 is not global: data
+Line 7 is not global: in
+Line 8 is not global: the
+Line 9 is not global: spine
+Line 10 is not global: *-
 @@END:	EXAMPLE
 
 @SRCCODE:

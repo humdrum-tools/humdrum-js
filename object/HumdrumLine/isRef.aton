@@ -8,7 +8,7 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType

@@ -8,7 +8,7 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType
@@ -16,12 +16,41 @@
 @SHORTDESC:	Returns true if the line is data.
 @LONGDESC:	
 
+The <span class="func">isData</span> function will return true if the
+<span class="obj">HumdrumLine</span> is a data line, or false otherwise.
+Data lines are lines containing spines, but they are not interpretations
+(starting with "@"), local comments (starting with "!"), or barlines
+(starting with "=").
+
 
 @@BEGIN: EXAMPLE
-@TITLE:		
+@TITLE:		Test of the <span class="func">isData</span> function.
 @DESCRIPTION:
+	Loading a Bach chorale, then checking if a data line is a data line, and
+	then checking if a barline is a data line..
 @CODE:
+var h = new Humdrum;
+h.onload = function (x) {
+	console.log("Checking if line index 45 is a barline:");
+	console.log(x.getLine(45).getText());
+	console.log(x.getLine(45).getLineType());
+	console.log(x.getLine(45).isData());
+
+	console.log("Checking if line index 44 is a barline:");
+	console.log(x.getLine(44).getText());
+	console.log(x.getLine(44).getLineType());
+	console.log(x.getLine(44).isData());
+};
+h.parse("h://chor/chor001.krn");
 @OUTPUT:
+Checking if line index 45 is a dataline:
+4BB	4d	2g	4b
+Data
+true
+Checking if line index 45 is a dataline:
+=6	=6	=6	=6
+Barline
+false
 @@END:	EXAMPLE
 
 @SRCCODE:

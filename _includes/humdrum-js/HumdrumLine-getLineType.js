@@ -5,7 +5,6 @@
 //    "Empty"              == line is empty
 //    "RefRecord"          == line is a reference record
 //    "UniversalRefRecord" == line is a universal reference record
-//    "UniversalComment"   == line is a universal comment
 //    "GlobalComment"      == line is a global comment
 //    "Interpretation"     == line is an interpretation
 //    "LocalComment"       == line is local comment
@@ -23,21 +22,20 @@ HumdrumLine.prototype.getLineType = function () {
 
 
 //
-// Convenience functions related to HumdrumLine::getLineType:
+// Convenience functions related to HumdrumLine::getLineType.  Regular expressions are used,
+// since the line type stirng will have an added subtype qualifier added later.
 //
 
-HumdrumLine.prototype.isEmpty              = function () { return this.getLineType() === "Empty"              }
-HumdrumLine.prototype.isRefRecord          = function () { return this.getLineType() === "RefRecord"          }
-HumdrumLine.prototype.isUniversalRefRecord = function () { return this.getLineType() === "UniversalRefRecord" }
-HumdrumLine.prototype.isUniversalComment   = function () { return this.getLineType() === "UniversalComment"   }
-HumdrumLine.prototype.isGlobalComment      = function () { return this.getLineType() === "GlobalComment"      }
-HumdrumLine.prototype.isInterpretation     = function () { return this.getLineType() === "Interpretation"     }
-HumdrumLine.prototype.isLocalComment       = function () { return this.getLineType() === "LocalComment"       }
-HumdrumLine.prototype.isBarline            = function () { return this.getLineType() === "Barline"            }
-HumdrumLine.prototype.isData               = function () { return this.getLineType() === "Data"               }
+HumdrumLine.prototype.isEmpty              = function () { return this.getLineType().match(/^Empty/             )}
+HumdrumLine.prototype.isRefRecord          = function () { return this.getLineType().match(/^RefRecord/         )}
+HumdrumLine.prototype.isUniversalRefRecord = function () { return this.getLineType().match(/^UniversalRefRecord/)}
+HumdrumLine.prototype.isGlobalComment      = function () { return this.getLineType().match(/^GlobalComment/     )}
+HumdrumLine.prototype.isInterpretation     = function () { return this.getLineType().match(/^Interpretation/    )}
+HumdrumLine.prototype.isLocalComment       = function () { return this.getLineType().match(/^LocalComment/      )}
+HumdrumLine.prototype.isBarline            = function () { return this.getLineType().match(/^Barline/           )}
+HumdrumLine.prototype.isData               = function () { return this.getLineType().match(/^Data/              )}
 
 HumdrumLine.prototype.isComment   = function () { return this.getLineType().match(/Comment/)   ? true : false }
-HumdrumLine.prototype.isUniversal = function () { return this.getLineType().match(/Universal/) ? true : false }
 HumdrumLine.prototype.isRef       = function () { return this.getLineType().match(/RefRecord/) ? true : false }
 HumdrumLine.prototype.isGlobal    = function () { return this.getText().match(/^!!/) ? true : false }
 

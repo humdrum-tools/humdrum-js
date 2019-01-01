@@ -1,0 +1,65 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@CATEGORY:	
+@METHOD:	isSpined
+@ACCESS:	public
+@RETURN:	boolean
+@PARAMETERS:	
+@FILE:		components/HumdrumLine.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	getLineType
+@SHORTDESC:	Returns true if the line has spined data.
+@LONGDESC:	
+
+Humdrum data lines can be grouped into two basic categories: they either
+contain lines with one or more spines, or they don't.  Line types that
+are not spined are global comments, reference records, universal records,
+and empty lines.  All other line types (interpretations, local comments,
+barlines, and data lines) are spined lines.
+
+@@BEGIN: EXAMPLE
+@TITLE:		Test of the <span class="func">isSpined</span> function.
+@DESCRIPTION:
+@CODE:
+var data = "!! global comment\n!!!OTL: My test data\n**data\n! local comment\nsome\ndata\nin\nthe\nspine\n*-\n";
+var h = new Humdrum(data);
+console.log(h.stringify());
+for (var i=0; i<h.getLineCount(); i++) {
+   console.log("Line", i+1, "is" + (h.getLine(i).isSpined() ? "" : " not"), "spined:", h.getLine(i).getText());
+}
+@OUTPUT:
+!! global comment
+!!!OTL: My test data
+**data
+! local comment
+some
+data
+in
+the
+spine
+*-
+
+Line 1 is not spined: !! global comment
+Line 2 is not spined: !!!OTL: My test data
+Line 3 is spined: **data
+Line 4 is spined: ! local comment
+Line 5 is spined: some
+Line 6 is spined: data
+Line 7 is spined: in
+Line 8 is spined: the
+Line 9 is spined: spine
+Line 10 is spined: *-
+@POSTDESC:
+
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-accessors.js -%}
+
+@@END:	FunctionDocumentation
+
+

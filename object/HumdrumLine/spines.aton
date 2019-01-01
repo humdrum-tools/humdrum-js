@@ -11,7 +11,7 @@
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	hasSpines
+@SEEALSO:	isSpined
 @SHORTDESC:	Boolean for if the line has token data.
 @LONGDESC:	
 
@@ -22,7 +22,7 @@ is a global comment or related line type, such as reference records.
 In this case the <span class="var arr">fields</span> array
 will contain exactly one pseudo-<span class="obj">HumdrumToken</span>
 object, which containts the text of the entire line.  It is preferable
-to use the <span class="func">hasSpines</span> function to access
+to use the <span class="func">isSpined</span> function to access
 this property.
 
 

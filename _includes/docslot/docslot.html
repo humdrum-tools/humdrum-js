@@ -211,6 +211,7 @@ pre.output-example {
 	/* margin-left:20px; */
 	margin-bottom:0; 
 	padding:0; 
+	line-height: 1em;
    padding-top: 15px;
 	padding-left:10px;
 }
@@ -833,6 +834,14 @@ function processAtonData(atondata, fullname, functionname, target, template, ful
 	var matches = window.location.href.match(/#([^\/]+)$/);
 	if (matches && (matches[1] === functionname)) {
 		showSlotDocumentation(fullname);
+	}
+
+	var runlater = document.querySelectorAll("script[type='run-later']");
+	for (var i=0; i<runlater.length; i++) {
+		var myscript = document.createElement("script");
+		myscript.innerHTML = runlater[i].innerHTML;
+		runlater[i].setAttribute("type", "already-run");
+		document.head.appendChild(myscript);
 	}
 }
 

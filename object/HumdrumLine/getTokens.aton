@@ -1,0 +1,40 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@METHOD:	getTokens
+@ACCESS:	public
+@PARAMETERS:	void
+@RETURN:	array of HumdrumTokens
+@FILE:		components/HumdrumLine.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	
+@SHORTDESC:	Return array of all HumdrumTokens on the line.
+@LONGDESC:	
+
+The <span class="func">getTokens</span> function returns an 
+array of <span class="obj">HumdrumToken</span> objects contained
+by the line.  If there are no tokens, or the storage array
+is not initialized, then an empty array will be returned.
+
+
+Non-spined lines will return an array with a single 
+<span class="obj">HumdrumToken</span> that contains the entire 
+line (global comments, empty lines, reference records).
+
+@@BEGIN: EXAMPLE
+@TITLE: Extracting a single token field from a line.
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@POSTDESC:
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-accessors.js -%}
+
+@@END:	FunctionDocumentation
+
+

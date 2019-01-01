@@ -8,14 +8,19 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType
-
+@SEEALSO:	isGlobal
+@SEEALSO:	isLocalComment
+@SEEALSO:	isComment
 @SHORTDESC:	Returns true if the line is a global comment.
 @LONGDESC:	
 
+The <span class="func">isGlobalComment</span> function returns true
+if the Humdrum line is a global comment (a line starting two
+(or more) exclamation marks
 
 @@BEGIN: EXAMPLE
 @TITLE:		

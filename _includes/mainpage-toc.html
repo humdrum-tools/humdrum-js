@@ -15,13 +15,14 @@ console.log("III");
 	if (!title) {
 		return;
 	}
-console.log("JJJ");
 	title.style.fontSize = "1.25rem";
 	title.style.marginBottom = "10px";
 	var output = "";
 	output += "<a href='/object/'>Object documentation</a>";
-	output += " | ";
+	output += "<span style='padding: 0px 15px;' class='pipe'>|</span>";
 	output += "<a href='/topic/'>Topics</a>";
+	output += "<span style='padding: 0px 15px;' class='pipe'>|</span>";
+	output += "<a href='/tutorial/'>Tutorials</a>";
 	title.innerHTML = output;
 });
 

@@ -1,0 +1,43 @@
+---
+---
+@@BEGIN:	FunctionDocumentation
+@INDEXED:	yes
+@CLASSNAME:	HumdrumLine
+@METHOD:	getNextLine
+@ACCESS:	public
+@RETURN:	reference to a HumdrumLine object or null
+@PARAMETERS:	void
+@FILE:		components/HumdrumLine.js
+@ALIAS:		
+@LINES:		
+@SEEALSO:	getPrevLine
+@SHORTDESC:	Returns the next <span class="obj">HumdrumLine</span> object in the Humdrum data.
+@LONGDESC:	
+
+The <span class="func">getNextLine</span> function returns a reference to
+the next <span class="obj">HumdrumLine</span> object in the containing
+<span class="obj">HumdrumBase</span> object.  A null will be returned
+for the next line of the last line in the data.
+
+The <span class="objvar">HumdrumBase.lines</span> array stores
+the <span class="obj s">HumdrumLine</span> for the Humdrum data.
+Random access to these lines is typically done with  <span
+class="objfunc">HumdrumBase.getLine</span>, but navigation can
+also be done using <span calss="func">getPrevLine</span> and <span
+calss="func">getPrevNext</span>
+
+
+@@BEGIN: EXAMPLE
+@TITLE:
+@DESCRIPTION:
+@CODE:
+@OUTPUT:
+@POSTDESC:
+@@END:	EXAMPLE
+
+@SRCCODE:
+{% include humdrum-js/HumdrumLine-accessors.js -%}
+
+@@END:	FunctionDocumentation
+
+

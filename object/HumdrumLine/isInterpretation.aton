@@ -8,7 +8,7 @@
 @ACCESS:	public
 @RETURN:	boolean
 @PARAMETERS:	
-@FILE:		
+@FILE:		components/HumdrumLine.js
 @ALIAS:		
 @LINES:		
 @SEEALSO:	getLineType
@@ -16,11 +16,20 @@
 @SHORTDESC:	Returns true if the line is an interpretation.
 @LONGDESC:	
 
+The <span class="func">isInterpretation</span> returns true if the 
+line is an interpretation line; otherwise, the function returns
+false.  An interpretation line starts with an asterisk (*).
 
 @@BEGIN: EXAMPLE
-@TITLE:		
+@TITLE:		Basic example usage of the <span class="func">isInterpretation</span> function.
 @DESCRIPTION:
 @CODE:
+var data = "!! global comment\n!!!OTL: My test data\n**data\n! local comment\nsome\ndata\nin\nthe\nspine\n*-\n";
+var h = new Humdrum(data);
+console.log(h.stringify());
+for (var i=0; i<h.getLineCount(); i++) {
+   console.log("Line", i+1, "is" + (h.getLine(i).isComment() ? "" : " not"), "a comment:", h.getLine(i).getText());
+}
 @OUTPUT:
 @@END:	EXAMPLE
 

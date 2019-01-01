@@ -5,14 +5,20 @@
 @CLASSNAME:	HumdrumLine
 @METHOD:	owner
 @ACCESS:	public
-@RETURN:	
+@CATEGORY:	variable
+@RETURN:	reference to a HumdrumBase object
 @PARAMETERS:	
 @FILE:		
 @ALIAS:		
 @LINES:		
-@SEEALSO:	
+@SEEALSO:	getOwner
 @SHORTDESC:	Reference to the HumdrumBase object that contains this object.
 @LONGDESC:	
+
+The <span class="var">owner</span> variable stores a reference to the
+<span class="obj">HumdrumBase</span> object that contains the line.
+If the line was created in isolation, the <span class="var">owner</span> 
+will be set to null.
 
 @@BEGIN: EXAMPLE
 @TITLE:		

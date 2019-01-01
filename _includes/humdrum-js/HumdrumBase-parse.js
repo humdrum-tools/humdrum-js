@@ -51,8 +51,12 @@ HumdrumBase.prototype.parse = function (text, options) {
 			this.ParseUriJrp(text, options);
 		} else if (text.match(/^#/)) {
 			this.ParseSelector(text, options);
-		} else {
+		} else if (text.match(/^[\r\n]*!/)) {
 			this.ParseText(text, options);
+		} else if (text.match(/^[\r\n]*\*/)) {
+			this.ParseText(text, options);
+		} else {
+			this.ParseUrl(text, options);  // assumed to be a relative URL address
 		}
 	} else {
 		console.log("Error: input to HumdrumBase::parse is unknown:", typeof text, "for data:", text);
