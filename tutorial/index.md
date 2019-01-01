@@ -1,6 +1,6 @@
 ---
 title: "Tutorials"
-breadcrumbs: '[["/", "home"], ["/topic", "topics"]]'
+breadcrumbs: '[["/", "home"], ["/tutorial", "tutorials"]]'
 github: 
 vim: ft=text
 ---
