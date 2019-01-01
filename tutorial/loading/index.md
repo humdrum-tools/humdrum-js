@@ -1,6 +1,6 @@
 ---
 title: "Loading and downloading data"
-breadcrumbs: '[["/", "home"], ["/topic", "topics"], ["/topic/loading", "loading data"]]'
+breadcrumbs: '[["/", "home"], ["/tutorial", "tutorials"], ["/topic/loading", "loading data"]]'
 github: 
 vim: ft=text
 ---
