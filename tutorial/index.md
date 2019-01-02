@@ -8,7 +8,8 @@ vim: ft=text
 {% include header.html %}
 
 
-* [loading Humdrum data](loading)
+{% include tutorial-list.html %}
+
 
 
 

@@ -78,5 +78,9 @@ of the <a target="_blank" href="https://humlib.humdrum.org">humlib C++
 Humdrum parser</a>.
 
 
+# Tutorials #
+
+{% include tutorial-list.html %}
+
 
 
