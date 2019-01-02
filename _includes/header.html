@@ -271,6 +271,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		text = h1x[i].innerHTML;
 		h1x[i].innerHTML = (i+1) + ". " + text;
 	}
+
+	// hide the "Project maintained by" text if there is a lot of text in the navigator:
+	if (h1s.length > 7) {
+		var foot = document.querySelector("footer");
+		foot.style.display = "none";
+	}
 });
 
 </script>
