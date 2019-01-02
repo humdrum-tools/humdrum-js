@@ -10,3 +10,5 @@ vim: ft=text
 Topics will go here.
 
 
+* [Bach Chorale Navigator](/topic/chorales)
+

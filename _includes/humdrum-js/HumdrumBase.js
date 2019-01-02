@@ -17,6 +17,8 @@
 // * HumdrumBase::getLineCount()            = Return the number of line records in data.
 // * HumdrumBase::getLines()                = Return an array of all HumdrumLine objects contained in the object.
 // * HumdrumBase::getLine()                 = Return a HumdrumLine object.
+// * HumdrumBase::getToken()                = Return a HumdrumToken object.
+// * HumdrumBase::getTokenText()            = Return the text of a HumdrumToken object.
 // * HumdrumBase::stringify()               = Convert object to plain text.
 //
 // Data analyses handled by HumdrumBase:
@@ -65,6 +67,7 @@
 {% include humdrum-js/HumdrumBase-parse.js               -%}
 {% include humdrum-js/HumdrumBase-getLineCount.js        -%}
 {% include humdrum-js/HumdrumBase-getLine.js             -%}
+{% include humdrum-js/HumdrumBase-getToken.js            -%}
 {% include humdrum-js/HumdrumBase-getLines.js            -%}
 {% include humdrum-js/HumdrumBase-doBaseAnalyses.js      -%}
 {% include humdrum-js/HumdrumBase-analyzeRefRecords.js   -%}
