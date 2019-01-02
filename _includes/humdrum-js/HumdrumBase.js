@@ -17,8 +17,12 @@
 // * HumdrumBase::getLineCount()            = Return the number of line records in data.
 // * HumdrumBase::getLines()                = Return an array of all HumdrumLine objects contained in the object.
 // * HumdrumBase::getLine()                 = Return a HumdrumLine object.
-// * HumdrumBase::analyzeRefRecords()       = Create reference record database object.
 // * HumdrumBase::stringify()               = Convert object to plain text.
+//
+// Data analyses handled by HumdrumBase:
+//
+// * HumdrumBase::analyzeRefRecords()       = Create reference record database object.
+// * HumdrumBase::analyzeLineSequence()     = Analyze line sequence.
 //
 //
 // Functions that are wrappers for HumdrumReferences object, this.refs.
@@ -55,14 +59,16 @@
 //
 
 
-{% include humdrum-js/HumdrumBase-HumdrumBase.js -%}
-{% include humdrum-js/HumdrumBase-clear.js -%}
-{% include humdrum-js/HumdrumBase-stringify.js -%}
-{% include humdrum-js/HumdrumBase-parse.js -%}
-{% include humdrum-js/HumdrumBase-getLineCount.js -%}
-{% include humdrum-js/HumdrumBase-getLine.js -%}
-{% include humdrum-js/HumdrumBase-getLines.js -%}
-{% include humdrum-js/HumdrumBase-analyzeRefRecords.js -%}
+{% include humdrum-js/HumdrumBase-HumdrumBase.js         -%}
+{% include humdrum-js/HumdrumBase-clear.js               -%}
+{% include humdrum-js/HumdrumBase-stringify.js           -%}
+{% include humdrum-js/HumdrumBase-parse.js               -%}
+{% include humdrum-js/HumdrumBase-getLineCount.js        -%}
+{% include humdrum-js/HumdrumBase-getLine.js             -%}
+{% include humdrum-js/HumdrumBase-getLines.js            -%}
+{% include humdrum-js/HumdrumBase-doBaseAnalyses.js      -%}
+{% include humdrum-js/HumdrumBase-analyzeRefRecords.js   -%}
+{% include humdrum-js/HumdrumBase-analyzeLineSequence.js -%}
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -70,14 +76,14 @@
 //    javascript cannot enforce privacy.
 //
 
-{% include humdrum-js/HumdrumBase-ParseUrl.js -%}
-{% include humdrum-js/HumdrumBase-ParseUriHumdrum.js -%}
-{% include humdrum-js/HumdrumBase-ParseUriGithub.js -%}
-{% include humdrum-js/HumdrumBase-ParseUriJrp.js -%}
-{% include humdrum-js/HumdrumBase-ParseText.js -%}
-{% include humdrum-js/HumdrumBase-ParseSelector.js -%}
-{% include humdrum-js/HumdrumBase-ParseElement.js -%}
-{% include humdrum-js/HumdrumBase-IsElement.js -%}
+{% include humdrum-js/HumdrumBase-ParseUrl.js            -%}
+{% include humdrum-js/HumdrumBase-ParseUriHumdrum.js     -%}
+{% include humdrum-js/HumdrumBase-ParseUriGithub.js      -%}
+{% include humdrum-js/HumdrumBase-ParseUriJrp.js         -%}
+{% include humdrum-js/HumdrumBase-ParseText.js           -%}
+{% include humdrum-js/HumdrumBase-ParseSelector.js       -%}
+{% include humdrum-js/HumdrumBase-ParseElement.js        -%}
+{% include humdrum-js/HumdrumBase-IsElement.js           -%}
 {% include humdrum-js/HumdrumBase-RefRecord-interface.js -%}
 
 

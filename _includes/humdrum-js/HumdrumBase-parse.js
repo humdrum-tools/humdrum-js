@@ -23,11 +23,11 @@
 //
 // Second parameter is an optional set of parsing options.   Known options:
 //
-//      options.basicParse == only do basic parsing of Humdrum data; otherwise, do a full parse and anaysis.
-//      options.analyzeRefRecords == turn on/off automatic ref record analysis.
+//      opts.basicParse == only do basic parsing of Humdrum data; otherwise, do a full parse and anaysis.
+//      opts.analyzeRefRecords == turn on/off automatic ref record analysis.
 //
 
-HumdrumBase.prototype.parse = function (text, options) {
+HumdrumBase.prototype.parse = function (text, opts) {
 	if (typeof this.parseCounter === "undefined") {
 		this.parseCounter = 0;
 	}
@@ -38,25 +38,25 @@ HumdrumBase.prototype.parse = function (text, options) {
 	}
 	this.clear();
 	if (this.IsElement(text)) {
-		this.ParseElement(text, options);
+		this.ParseElement(text, opts);
 	} else if ((typeof text === "string") || text instanceof String) {
 		text = text.replace(/^\s+/m, "");   // remove any leading spaces or newlines
 		if (text.match(/^https?:\/\//)) {
-			this.ParseUrl(text, options);
+			this.ParseUrl(text, opts);
 		} else if (text.match(/^(h|hum|humdrum):\/\//)) {
-			this.ParseUriHumdrum(text, options);
-		} else if (text.match(/^(g|github):\/\//)) {
-			this.ParseUriGithub(text, options);
+			this.ParseUriHumdrum(text, opts);
+		} else if (text.match(/^(g|gh|github):\/\//)) {
+			this.ParseUriGithub(text, opts);
 		} else if (text.match(/^(j|jrp):\/\//)) {
-			this.ParseUriJrp(text, options);
+			this.ParseUriJrp(text, opts);
 		} else if (text.match(/^#/)) {
-			this.ParseSelector(text, options);
+			this.ParseSelector(text, opts);
 		} else if (text.match(/^[\r\n]*!/)) {
-			this.ParseText(text, options);
+			this.ParseText(text, opts);
 		} else if (text.match(/^[\r\n]*\*/)) {
-			this.ParseText(text, options);
+			this.ParseText(text, opts);
 		} else {
-			this.ParseUrl(text, options);  // assumed to be a relative URL address
+			this.ParseUrl(text, opts);  // assumed to be a relative URL address
 		}
 	} else {
 		console.log("Error: input to HumdrumBase::parse is unknown:", typeof text, "for data:", text);

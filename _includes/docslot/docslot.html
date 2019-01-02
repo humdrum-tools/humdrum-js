@@ -882,8 +882,8 @@ function addObjectSpanLinks(el) {
 		objs[i].outerHTML = text;
 	}
 
-	// Links to functions in objects (or links to variable in objects).
-	// Primarily intended for functions and variables that are not
+	// Links to functions in objects
+	// Primarily intended for functions that are not
 	// in the documentation of the currently processed object.
 	// <span class="objfunc">HumdrumBase.parse</span>
 	objs = el.querySelectorAll("span.objfunc")
@@ -893,7 +893,6 @@ function addObjectSpanLinks(el) {
 		if (!matches) {
 			continue;
 		}
-console.log("PROCESSING", objs[i]);
 		var object = matches[1];
 		var funct = matches[2];
 		var output = "";
@@ -901,6 +900,28 @@ console.log("PROCESSING", objs[i]);
 		output += "/#" + funct + '">';
 		output += '<span class="obj">' + object + '</span>';
 		output += '<span class="func">' + funct + '</span>';
+		output += "</a>";
+		objs[i].outerHTML = output;
+	}
+
+	// Links to variables in objects
+	// Primarily intended for variables that are not
+	// in the documentation of the currently processed object.
+	// <span class="objfunc">HumdrumBase.parse</span>
+	objs = el.querySelectorAll("span.objvar")
+	for (i=0; i<objs.length; i++) {
+		var cont = objs[i].innerHTML.trim();
+		var matches = cont.match(/^([^.]+)\.([^.]+)$/);
+		if (!matches) {
+			continue;
+		}
+		var object = matches[1];
+		var funct = matches[2];
+		var output = "";
+		output += '<a target="_blank" href="/object/' + object;
+		output += "/#" + funct + '">';
+		output += '<span class="obj">' + object + '</span>';
+		output += '<span class="var">' + funct + '</span>';
 		output += "</a>";
 		objs[i].outerHTML = output;
 	}

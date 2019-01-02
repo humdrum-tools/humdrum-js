@@ -34,7 +34,7 @@ RefRecords.prototype.parse = function (humdrumfile) {
 			}
 		}
 		if (ishtml) {
-			lines = humdrumfile.innerHTML.match(/[^\r\n]+/g);
+			lines = humdrumfile.textContent.match(/[^\r\n]+/g);
 		}
 	}
 

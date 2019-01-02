@@ -3,8 +3,8 @@
 // HumdrumStructure::initializer -- Create a HumdrumStructure object.
 //
 
-function HumdrumStructure(text) {
-	HumdrumBase.call(this, text);
+function HumdrumStructure(text, opts) {
+	HumdrumBase.call(this, text, opts);
 	return this;
 }
 

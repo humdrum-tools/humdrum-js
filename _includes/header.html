@@ -23,6 +23,14 @@
 
 <style>
 
+a.anchor {
+    /* needed due to height of fixed header: */
+    display: block;
+    position: relative;
+    top: -250px;
+    visibility: hidden;
+}
+
 h2 {
 	color: #4276b6;
 	font-size: 18px;
@@ -36,6 +44,20 @@ h3 {
 
 .compressed td {
 	padding: 0px 10px !important; 
+}
+
+pre code {
+	/* need to match hljs style being used? */
+	background-color: #322931 !important;
+}
+
+code.language-parseltongue {
+	line-height: 1rem;
+}
+
+pre {
+	line-height: 1rem;
+	font-size: 0.85rem;
 }
 
 pre.code-example {
@@ -225,3 +247,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </script>
 
+
+<script>
+// add numbers to h1 headings.
+
+
+document.addEventListener("DOMContentLoaded", function () {
+	var h1s = document.querySelectorAll("section h1");
+	if (h1s.length < 3) {
+		// do not number unless there are at least three h1 headings.
+		return;
+	}
+	var i;
+	var text;
+	for (i=0; i<h1s.length; i++) {
+		text = h1s[i].innerHTML;
+		h1s[i].innerHTML = (i+1) + ". " + text;
+	}
+
+	// match numbers on nav
+	var h1x = document.querySelectorAll("nav li.tag-h1");
+	for (i=0; i<h1x.length; i++) {
+		text = h1x[i].innerHTML;
+		h1x[i].innerHTML = (i+1) + ". " + text;
+	}
+});
+
+</script>

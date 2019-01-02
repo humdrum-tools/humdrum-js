@@ -15,7 +15,8 @@
 // 
 // * RefRecords::clear()            = Clear contents of object.
 // * RefRecords::parse()            = Extract reference records from Humdrum data.
-// * RefRecords::getRefFirst()      = Get the first reference record matching key in data.
+// * RefRecords::getRef()           = Get the first reference record matching key in data.
+// * RefRecords::getRefValue()      = Get value of the first reference record matching key in data.
 // * RefRecords::getRefAll()        = Get array of all keys of the given type.
 // * RefRecords::getRefFirstExact() = Get the first reference record that matches key plus qualifiers.
 // * RefRecords::getRefAllExact()   = Get array of all keys of the given type that matches key plus qualifiers.
@@ -37,7 +38,7 @@
 {% include humdrum-js/RefRecords-RefRecords.js -%}
 {% include humdrum-js/RefRecords-clear.js -%}
 {% include humdrum-js/RefRecords-parse.js -%}
-{% include humdrum-js/RefRecords-getRefFirst.js -%}
+{% include humdrum-js/RefRecords-getRef.js -%}
 {% include humdrum-js/RefRecords-getRefAll.js -%}
 {% include humdrum-js/RefRecords-getRefFirstExact.js -%}
 {% include humdrum-js/RefRecords-getRefAllExact.js -%}

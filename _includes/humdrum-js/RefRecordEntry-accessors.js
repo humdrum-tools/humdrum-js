@@ -51,4 +51,19 @@ RefRecordEntry.prototype.getText = function () {
 
 
 
+//////////////////////////////
+//
+// getValue -- Return the .value variable, giving an empty string if it is
+//     undefined or invalid.
+//
+
+RefRecordEntry.prototype.getValue = function () {
+	if (this.value && (typeof this.value === "string" || this.value instanceof String)) {
+		return this.value;
+	} else {
+		return "";
+	}
+}
+
+
 

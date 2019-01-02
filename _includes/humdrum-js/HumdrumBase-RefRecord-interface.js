@@ -4,9 +4,14 @@
 // RefRecords.js file for descriptions of the functions.
 //
 
-HumdrumBase.prototype.getRefFirst = function () {
+HumdrumBase.prototype.getRef = function () {
 	if (!this.refs) { this.analyzeRefRecords() }
-	return RefRecords.prototype.getRefFirst.apply(this.refs, arguments);
+	return RefRecords.prototype.getRef.apply(this.refs, arguments);
+};
+
+HumdrumBase.prototype.getRefValue = function () {
+	if (!this.refs) { this.analyzeRefRecords() }
+	return RefRecords.prototype.getRefValue.apply(this.refs, arguments);
 };
 
 HumdrumBase.prototype.getRefAll = function () {

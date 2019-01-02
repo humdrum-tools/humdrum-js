@@ -3,8 +3,8 @@
 // Humdrum::initializer -- Create a Humdrum object.
 //
 
-function Humdrum(text) {
-	HumdrumTool.call(this, text);
+function Humdrum(text, opts) {
+	HumdrumTool.call(this, text, opts);
 	return this;
 }
 

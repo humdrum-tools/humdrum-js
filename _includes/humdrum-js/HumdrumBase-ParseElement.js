@@ -17,7 +17,7 @@ HumdrumBase.prototype.ParseElement = function (element, options) {
 		console.log("Error: Element is not an element, but a", typeof element, "for input", element);
 		return;
 	}
-	this.parse(element.innerHTML, options);
+	this.parse(element.textContent, options);
 	return this;
 };
 

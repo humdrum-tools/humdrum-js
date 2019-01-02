@@ -23,7 +23,7 @@ HumdrumBase.prototype.ParseSelector = function (selector, options) {
 		console.log("Error: could not find an element for selector", selector);
 		return this;
 	}
-	this.parse(element.innerHTML, options);
+	this.parse(element.textContent, options);
 	return this;
 };
 

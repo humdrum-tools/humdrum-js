@@ -25,6 +25,14 @@ HumdrumBase.prototype.ParseText = function (text, options) {
 	}
 
 	if (options) {
+		if (options.analyzeLineSequence) {
+			// expicitly requested
+			this.analyzeLineSequence();
+		} else if (!options.basicParse) {
+			// implicitly requested
+			this.analyzeLineSequence();
+		}
+
 		if (options.analyzeRefRecords) {
 			// expicitly requested
 			this.analyzeRefRecords();
@@ -34,7 +42,7 @@ HumdrumBase.prototype.ParseText = function (text, options) {
 		}
 	} else {
 		// implicitly requested
-		this.analyzeRefRecords();
+		this.doBaseAnalyses();
 	}
 
 	return this;

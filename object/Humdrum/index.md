@@ -12,19 +12,30 @@ vim: ts=3 hlsearch ft=text
 The Humdrum object is the top-level interface for managing Humdrum data.
 
 
-<br/>
-
-# Functions #
-
-{% include docslot/HumdrumToken_main.html %}
 
 
+<hr style="padding-top:80px;" noshade>
 
-<br/>
+# Inherited functions #
 
-# Variables #
 
-{% include docslot/HumdrumToken_variables.html %}
+## From <span class="obj">HumdrumBase</span> ##
+
+{% include docslot/HumdrumBase_main.html %}
+{% include docslot/HumdrumBase_refs.html %}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

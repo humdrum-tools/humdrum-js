@@ -3,12 +3,12 @@
 // HumdrumTool::initializer -- Create a HumdrumTool object.
 //
 
-function HumdrumTool(text) {
-	HumdrumContent.call(this, text);
+function HumdrumTool(text, opts) {
+	HumdrumAnalysis.call(this, text, opts);
 	return this;
 }
 
-HumdrumTool.prototype = Object.create(HumdrumContent.prototype);
+HumdrumTool.prototype = Object.create(HumdrumAnalysis.prototype);
 
 
 
