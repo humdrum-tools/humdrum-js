@@ -7,8 +7,8 @@ vim: ft=text
 
 {% include header.html %}
 
-Topics will go here.
+
+{% include topic-list.md %}
 
 
-* [Bach Chorale Navigator](/topic/chorales)
 
