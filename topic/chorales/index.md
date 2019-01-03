@@ -1,24 +1,26 @@
 ---
 verovio: "true"
-title: "Topics"
+title: "Bach chorale typesetter"
 breadcrumbs: '[["/", "home"], ["/topic", "topics"]]'
 github: https://github.com/humdrum-tools/humdrum-js
 vim: ft=text ts=3
 ---
 
 {% include header.html %}
-{% include_relative style-local.html %}
 
 # Introduction #
 
 This page demonstrates how to mix humdrum-js with the <a target="_blank"
 href="https://plugins.humdrum.org">humdrum-notation-plugin</a>
 library to download J.S. Bach chorales from <a target="_blank"
-href="https://github.com/craigsapp/bach-370-chorales">this
-Github repository</a> and dynamically generate notation based on
-the option settings from the following menus.  View the <a target="_blank"
+href="https://github.com/craigsapp/bach-370-chorales">this Github
+repository</a> and dynamically generate notation based on the option
+settings from the following menus.  View the <a target="_blank"
 href="https://raw.githubusercontent.com/humdrum-tools/humdrum-js/master/topic/chorales/index.md">pages's
 source code</a> to see how the navigator is implemented.
+
+Keyboard shortcuts: left/right arrow navigates through the chorale list.  Keys 1-7 transpose tonic
+from C to B. Digit 0 returns choral to original pitch.
 
 
 <span class="button right" onclick="saveChoraleSvg()">Save</span>
@@ -33,11 +35,11 @@ source code</a> to see how the navigator is implemented.
 	</tr>
 	<tr>
 		<td>
-			<div id="menu"></div>
+			<div id="title-menu"></div>
 		</td>
 
 		<td>
-			<select id="tonic">
+			<select class="myform" id="tonic">
 				<option value="original">original</option>
 				<option value="c-">C&flat;</option>
 				<option value="c">C</option>
@@ -64,7 +66,7 @@ source code</a> to see how the navigator is implemented.
 		</td>
 
 		<td>
-			<select id="octave">
+			<select class="myform" id="octave">
 				<option value="1">+1</option>
 				<option selected value="0">0</option>
 				<option value="-1">-1</option>
@@ -72,7 +74,7 @@ source code</a> to see how the navigator is implemented.
 		</td>
 
 		<td>
-			<select id="staves">
+			<select class="myform" id="staves">
 				<option value="gs">GS</option>
 				<option value="satb">SATB</option>
 			</select>
@@ -97,10 +99,10 @@ source code</a> to see how the navigator is implemented.
 			<span style="white-space:nowrap;" id="spacing">
 				Musical spacing:
 				<span class="range">
-					<input style="width:200px;" id="spacingLinear" type="range" min="10" max="60" value="25">
+					<input style="width:200px;" class="myform" id="spacingLinear" type="range" min="10" max="60" value="25">
 				</span>
 				<span class="range">
-					<input style="width:200px;" id="spacingNonLinear" type="range" min="30" max="80" value="60">
+					<input style="width:200px;" class="myform" id="spacingNonLinear" type="range" min="30" max="80" value="60">
 				</span>
 			</span>
 		</td>
@@ -108,12 +110,12 @@ source code</a> to see how the navigator is implemented.
 	<tr>
 		<td colspan="4">
 			<span style="white-space:nowrap; padding-left:10px;">
-				Title:&nbsp;<input checked type="checkbox" id="title" value="yes">
+				Title:&nbsp;<input class="myform" checked type="checkbox" id="showTitle" value="yes">
 			</span>
 			<span style="white-space:nowrap; padding-left:10px;">
 				Size:
 				<span style="display:inline-block; position:relative; top:3px;">
-					<input style="width:80px;" id="size" type="range" min="10" max="60" value="32">
+					<input style="width:80px;" class="myform" id="size" type="range" min="10" max="60" value="32">
 				</span>
 			</span>
 
@@ -148,21 +150,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// add event listeners for static form fields:
-	var tonicSelect = document.querySelector("#tonic");
-	var octaveSelect = document.querySelector("#octave");
-	var staffSelect = document.querySelector("#staves");
-	var spacingLinearSelect = document.querySelector("#spacingLinear");
-	var spacingNonLinearSelect = document.querySelector("#spacingNonLinear");
-	var titleCheck = document.querySelector("#title");
-	var sizeSelect = document.querySelector("#size");
-
-	tonicSelect.addEventListener("change", generateNotationFromOptions);
-	octaveSelect.addEventListener("change", generateNotationFromOptions);
-	staffSelect.addEventListener("change", generateNotationFromOptions);
-	spacingLinearSelect.addEventListener("change", generateNotationFromOptions);
-	spacingNonLinearSelect.addEventListener("change", generateNotationFromOptions);
-	titleCheck.addEventListener("change", generateNotationFromOptions);
-	sizeSelect.addEventListener("change", generateNotationFromOptions);
+	var forms = document.querySelectorAll(".myform");
+	for (var i=0; i<forms.length; i++) {
+		forms[i].addEventListener("change", generateNotationFromOptions);
+	}
 });
 
 
@@ -173,24 +164,22 @@ document.addEventListener("DOMContentLoaded", function () {
 //    from the webpage and then display based on those options.
 //
 
-function generateNotationFromOptions () {
-	var fileSelect = document.querySelector("#menu select");
-	var file = fileSelect[fileSelect.selectedIndex].value;
-	var tonicSelect = document.querySelector("#tonic");
-	var tonic = tonicSelect[tonicSelect.selectedIndex].value;
-	var octaveSelect = document.querySelector("#octave");
-	var octave = octaveSelect[octaveSelect.selectedIndex].value;
-	var staffSelect = document.querySelector("#staves");
-	var staves = staffSelect[staffSelect.selectedIndex].value;
-	var spacingLinearInput = document.querySelector("#spacingLinear");
-	var spacingLinear = spacingLinearInput.value;
-	var spacingNonLinearInput = document.querySelector("#spacingNonLinear");
-	var spacingNonLinear = spacingNonLinearInput.value;
-	var titleCheck = document.querySelector("#title");
-	var showTitle = titleCheck.checked;
-	var sizeSelect = document.querySelector("#size");
-	var size = sizeSelect.value;
-	displayNotation(file, tonic, octave, staves, spacingLinear, spacingNonLinear, showTitle, size);
+function generateNotationFromOptions() {
+	var forms = document.querySelectorAll(".myform");
+	var options = {};
+	for (var i=0; i<forms.length; i++) {
+		var name = forms[i].id;
+		if (!name) {
+			continue;
+		}
+		if (forms[i].type == "checkbox") {
+			options[name] = forms[i].checked;
+		} else {
+			options[name] = forms[i].value;
+		}
+		
+	}
+	displayNotation(options);
 };
 
 
@@ -202,8 +191,8 @@ function generateNotationFromOptions () {
 //
 
 function buildTitleMenu(index) {
-	var titleMenu = document.querySelector("#menu");
-	var output = '<select name="chorale" id="sel">';
+	var titleMenu = document.querySelector("#title-menu");
+	var output = '<select class="myform" name="chorale" id="file">';
 	for (var i=0; i<index.getLineCount(); i++) {
 		if (!index.getLine(i).isData()) {
 			continue;
@@ -233,43 +222,43 @@ function buildTitleMenu(index) {
 //  notation of specified work.
 //
 
-function displayNotation(filename, tonic, octave, staves, spacingLinear, 
-		spacingNonLinear, showTitle, size) {
-	var filebase = filename.replace(/\.[^.]*$/, "").replace(/.*\//, "");
+function displayNotation(opts) {
+	var filebase = opts.file.replace(/\.[^.]*$/, "").replace(/.*\//, "");
 	var script = document.querySelector("#" + filebase);
 	var filter = "";
-	if (staves.toUpperCase() === "GS") {
+	if (opts.staves.toUpperCase() === "GS") {
 		filter += "satb2gs";
 	}
-	if (tonic.toUpperCase() !== "ORIGINAL") {
+	if (opts.tonic.toUpperCase() !== "ORIGINAL") {
 		filter += filter ? " | " : "";
-		filter += "transpose -k " + tonic;
+		filter += "transpose -k " + opts.tonic;
 	}
-	octave = parseInt(octave) * 40;
-	if (octave) {
+	opts.octave = parseInt(opts.octave) * 40;
+	if (opts.octave) {
 		filter += filter ? " | " : "";
-		filter += "transpose -b " + octave;
+		filter += "transpose -b " + opts.octave;
 	}
 	if (!script) {
-		prepareExample(filename, tonic);
+		prepareExample(opts.file, opts.tonic);
 	} else {
 		var options = {
 			source: filebase,
 			target: "main",
 			scale: 32,
 			filter: filter,
-			header: showTitle
+			header: opts.showTitle ? true : false
 		};
-		if (spacingLinear) {
-			options.spacingLinear = parseInt(spacingLinear) / 100.0;
+		if (opts.spacingLinear) {
+			options.spacingLinear = parseInt(opts.spacingLinear) / 100.0;
 		}
-		if (spacingNonLinear) {
-			options.spacingNonLinear = parseInt(spacingNonLinear) / 100.0;
+		if (opts.spacingNonLinear) {
+			options.spacingNonLinear = parseInt(opts.spacingNonLinear) / 100.0;
 		}
 		if (size) {
-			options.scale = parseInt(size) / 100.0;
+			options.scale = parseInt(opts.size) / 100.0;
 		}
 		options.spacingStaff = filter.match(/satb/) ? 6 : 10;
+		options.appendText = "!!!header-left: @{SCT}";
 		displayHumdrum(options);
 	}
 }
@@ -310,9 +299,32 @@ function prepareExample(filename) {
 			script.textContent = text;
 			document.body.appendChild(script);
 			generateNotationFromOptions();
+			getAdjacentFiles();
 		};
 		downloader.parse(URIBASE + "/" + filename);
 	}
+}
+
+
+
+////////////////////
+//
+// getAdjacentFiles -- preload files so that sequential access to scores is sped up.
+//
+
+function getAdjacentFiles() {
+
+	var selection = document.querySelector("#file");
+	if (!selection) {
+		return;
+	}
+	var index = selection.selectedIndex;
+	var len = selection.length;
+	var above = index == len-1 ? 0 : index + 1;
+	var below = index == 0 ? len-1 : index - 1;
+	preFetch(selection[above].value);
+	preFetch(selection[below].value);
+
 }
 
 
@@ -354,7 +366,56 @@ function preFetch(filename) {
 //
 
 window.addEventListener("keydown", function (event) {
-	console.log(event);
+	//	console.log(event);
+	var selection = document.querySelector("#file");
+	if (!selection) {
+		return;
+	}
+	var index = selection.selectedIndex;
+	var len = selection.length;
+	var newindex = index;
+
+	if (event.key === "ArrowRight") {
+		newindex = index == len-1 ? 0 : index + 1;
+	} else if (event.key === "ArrowLeft") {
+		newindex = index == 0 ? len-1 : index - 1;
+	} else if (event.key === "ArrowUp") {
+		newindex = index == 0 ? len-1 : index - 1;
+	} else if (event.key === "ArrowDown") {
+		newindex = index == len-1 ? 0 : index + 1;
+	} else {
+		// check for transposition: 1=c, 2=d, 3=e, 0=original
+		var newkey = -1
+		if (event.key === "1") {
+			newkey = 2;   // c
+		} else if (event.key === "2") {
+			newkey = 5;   // d
+		} else if (event.key === "3") {
+			newkey = 8;   // e
+		} else if (event.key === "4") {
+			newkey = 11;   // f
+		} else if (event.key === "5") {
+			newkey = 14;   // g
+		} else if (event.key === "6") {
+			newkey = 17;   // a
+		} else if (event.key === "7") {
+			newkey = 20;   // b
+		} else if (event.key === "0") {
+			newkey = 0;   // original
+		}
+		if (newkey >= 0) {
+			var tselect = document.querySelector("#tonic");
+			if (tselect) {
+				event.preventDefault();
+				tselect.selectedIndex = newkey;
+				generateNotationFromOptions();
+			}
+		}
+		return;
+	}
+	event.preventDefault();
+	selection.selectedIndex = newindex;
+	generateNotationFromOptions();
 });
 
 
@@ -364,7 +425,7 @@ window.addEventListener("keydown", function (event) {
 //
 
 function saveChoraleSvg() {
-	var fileSelect = document.querySelector("#menu select");
+	var fileSelect = document.querySelector("#file");
 	var file = fileSelect[fileSelect.selectedIndex].value;
 	var tonicSelect = document.querySelector("#tonic");
 	var tonic = tonicSelect[tonicSelect.selectedIndex].value;
@@ -406,3 +467,72 @@ function saveChoraleSvg() {
 
 </script>
 
+
+
+<!-- ---------- STYLES for page ---------- -->
+
+<style>
+footer {
+	display: none;
+}
+body section {
+	min-height: 2000px !important;
+	min-width: 590px !important;
+}
+table.chooser tr, table.chooser td {
+	border: 0;
+	padding: 0px 3px;
+	text-align: center;
+}
+</style>
+
+<!-- option men  styles -->
+
+<style>
+
+span.range {
+	display: inline-block; 
+	position: relative; 
+	top: 3px;
+}
+
+</style>
+
+
+<!--  styling for save button: -->
+
+<style>
+
+span.button {
+   background: #aa0000;
+   border-radius: 1rem;
+   font-family: Arial;
+   color: #fafafa;
+   font-size: 1rem;
+   padding: 0px 5px 0px 5px;
+   text-decoration: none;
+   margin-left: 1px;
+   margin-right: 1px;
+}
+span.button.demo {
+   font-size: 0.80rem;
+   padding: 0px 4px 0px 4px;
+}
+
+span.right {
+   display: block;
+   float: right;
+}
+
+span.button:hover:not(.demo) {
+   background: #009900;
+   text-shadow: 0px 0px 3px #00ff00;
+   box-shadow: 0px 0px 14px #008800;
+   cursor: pointer;
+}
+
+span.button.demo:hover {
+   cursor: default;
+}
+
+</style>
