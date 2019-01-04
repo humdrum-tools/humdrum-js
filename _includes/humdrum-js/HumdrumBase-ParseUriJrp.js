@@ -19,7 +19,24 @@ HumdrumBase.prototype.ParseUriJrp = function (uri, options) {
 		console.log("Error: No content in input string:", uri);
 		return this;
 	}
-	var url;
+	var url = this.MakeUrlJrp(uri);
+	if (url) {
+		this.parse(url, options);
+	} else {
+		console.log("Error: input string is not a JRP URI:", uri);
+	}
+	return this;
+};
+
+
+
+///////////////////////////////
+//
+// HumdrumBase::MakeUrlJrp -- Convert a (kernScores) JRP URI into a URL.
+//
+
+HumdrumBase.prototype.MakeUrlJrp = function (uri, options) {
+	var url = "";
 	var composerid;
 	var jrpid;
 	var filename;
@@ -34,23 +51,9 @@ HumdrumBase.prototype.ParseUriJrp = function (uri, options) {
 			jrpid += "-" + filename;
 		}
 		url = "http://jrp.ccarh.org/cgi-bin/jrp?a=humdrum&f=" + jrpid;
-		this.parse(url, options);
-	} else {
-		matches = uri.match(/^(j|jrp):\/\/([a-z]{3})\b/i);
-		if (matches) {
-			// Downloading an entire composer's repertory.  Should not be done on HumdrumBase
-			// object, but rather the HumdrumSet object, so including as an example for implementation
-			// there.
-			composerid = matches[2].toLowerCase();
-			composerid = composerid.charAt(0).toUpperCase() + composerid.substr(1);
-			url = "http://kern.humdrum.org/data?s=jrp/" + composerid;
-			this.parse(url, options);
-		} else {
-			console.log("Error: input string is not a JRP URI:", uri);
-		}
 	}
-	return this;
-};
+	return url;
+}
 
 
 

@@ -3,14 +3,15 @@ verovio: "true"
 title: "Bach chorale typesetter"
 breadcrumbs: '[["/", "home"], ["/topic", "topics"]]'
 github: https://github.com/humdrum-tools/humdrum-js
-vim: ft=text ts=3
+vim: ts=3
 ---
 
 {% include header.html %}
 
 # Introduction #
 
-This page demonstrates how to mix humdrum-js with the <a target="_blank"
+This page demonstrates how to mix <a target="_blank"
+href="https://js.humdrum.org">humdrum-js</a> with the <a target="_blank"
 href="https://plugins.humdrum.org">humdrum-notation-plugin</a>
 library to download J.S. Bach chorales from <a target="_blank"
 href="https://github.com/craigsapp/bach-370-chorales">this Github
@@ -19,12 +20,97 @@ settings from the following menus.  View the <a target="_blank"
 href="https://raw.githubusercontent.com/humdrum-tools/humdrum-js/master/topic/chorales/index.md">pages's
 source code</a> to see how the navigator is implemented.
 
-Keyboard shortcuts: left/right arrow navigates through the chorale list.  Keys 1-7 transpose tonic
-from C to B. Digit 0 returns choral to original pitch.
+Keyboard shortcuts: the left/right arrows navigate through the
+chorale list (or you can click on the title menu to choose one at
+random).  Keys 1-7 transpose tonic from C to B. Digit 0 returns
+choral to original pitch.  Click on the <span class="button
+demo">Save</span> button to download the currently viewed notation
+as an SVG image.  You can also copy-and-paste the text in the black
+box to the right into a webpage to display the same notation dynamically 
+on your webpage.
 
 
 <span class="button right" onclick="saveChoraleSvg()">Save</span>
 # Bach chorale typesetter #
+
+<style>
+
+@media print, screen and (max-width: 800px) {
+	#right-side{
+		display: none;
+	}
+}
+
+
+#right-side {
+	position: absolute;
+	right: -210px;
+	top: 300px;
+	overflow: hidden;
+	max-height: 600px;
+	min-height: 300px;
+	max-height: 600px;
+	width:200px;
+}
+pretransparent code.transparent {
+	background-color: transparent !important;
+}
+code#example {
+	color: cyan !important;
+	font-weight: bold;
+}
+pre.narrow, code.narrow {
+	font-size: 0.8rem;
+	width:100%;
+	height: 100%;
+	overflow: scroll;
+	padding: 0;
+	margin: 0;
+	scrollbar-color: #000;
+}
+pre.narrow::-webkit-scrollbar, code.narrow::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+</style>
+<div id="right-side">
+HTML code for music example:
+<pre style="padding-bottom:-9px;" class="narrow html">
+<code>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;My Example&lt;/title&gt;
+&lt;script src="https://verovio-script.humdrum.org/scripts/verovio-toolkit.js"&gt;&lt;/script&gt;
+&lt;script src="https://plugin.humdrum.org/scripts/humdrum-notation-plugin.js"&gt;&lt;/script&gt;
+&lt;script&gt;var vrvToolkit = new verovio.toolkit()&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div style="width:590px"&gt;</code></pre>
+<pre style="margin-top:-8px; padding-top:4px;" class="javascript narrow">
+<code id="example" class="html">
+
+
+
+
+
+
+
+
+
+</code></pre>
+<pre style="margin-top:-8px;" class="narrow html">
+<code>&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p style="padding-top:10px; padding:5px; margin:-5px; inline-block; font-size:0.7rem; line-height: 0.9rem !important;">
+Copy & paste the above HTML text into your own webpage.  Copy the
+text in all three black boxes above to create a new webpage, or
+copy only the middle box's text if you already have the Humdrum
+notation plugin setup in your page.  The width of the music notation
+on this page is 590 pixels, so when placing in a containing element
+that is 590 pixels, the layout will match the one for the music on
+this page.
+</p>
+</div>
 
 <table style="margin-left:-27px;" class="chooser">
 	<tr>
@@ -121,8 +207,8 @@ from C to B. Digit 0 returns choral to original pitch.
 
 		</td>
 	</tr>
-
 </table>
+
 
 <div id="main-container">
 <script type="text/x-humdrum" id="main"></script>
@@ -255,12 +341,58 @@ function displayNotation(opts) {
 			options.spacingNonLinear = parseInt(opts.spacingNonLinear) / 100.0;
 		}
 		if (size) {
-			options.scale = parseInt(opts.size) / 100.0;
+			options.scale = parseInt(opts.size);
 		}
 		options.spacingStaff = filter.match(/satb/) ? 6 : 10;
 		options.appendText = "!!!header-left: @{SCT}";
 		displayHumdrum(options);
+		printExampleCode(opts.file, options);
 	}
+}
+
+
+
+/////////////////////////////
+//
+// printExampleCode
+//
+
+function printExampleCode(file, opts) {
+	var example = document.querySelector("#example");
+	if (!example) {
+		return;
+	}
+	var exampleid = getExampleId();
+	var output = "";
+	output += "<script" + ">displayHumdrum({\n";
+   output += '   source: "' + exampleid + '",\n';
+	if (opts.scale) {
+		output += "   scale: " + opts.scale + ",\n";
+	}
+	if (opts.spacingLinear != 0.25) {
+		output += "   spacingLinear: " + opts.spacingLinear + ",\n";
+	}
+	if (opts.spacingNonLinear != 0.6) {
+		output += "   spacingNonLinear: " + opts.spacingNonLinear + ",\n";
+	}
+	if (opts.header) {
+   	output += "   header: true,\n";
+		if (opts.appendText) {
+   		output += '   appendText: "' + opts.appendText + '",\n';
+		}
+	}
+	if (opts.spacingStaff) {
+		output += "   spacingStaff: " + opts.spacingStaff + ",\n";
+	}
+	if (opts.filter) {
+		output += '   filter: "' + opts.filter + '",\n';
+	}
+   output += '   uri: "github://craigsapp/bach-370-chorales/' + file + '"\n';
+   output += "})";
+	output += "</script" + ">\n";
+	output += '<script id="' + exampleid + '" type="text/x-humdrum"><';
+	output += '/script>';
+	example.textContent = output;
 }
 
 
@@ -421,10 +553,12 @@ window.addEventListener("keydown", function (event) {
 
 //////////////////////////////
 //
-// saveChoraleSvg --
+// getExampleId --
 //
 
-function saveChoraleSvg() {
+function getExampleId() {
+	var output = "";
+
 	var fileSelect = document.querySelector("#file");
 	var file = fileSelect[fileSelect.selectedIndex].value;
 	var tonicSelect = document.querySelector("#tonic");
@@ -436,31 +570,40 @@ function saveChoraleSvg() {
 
 	// Construct a filename based on the options:
 	if (!file) {
-		return;
+		return "unknown";
 	}
 	var matches = file.match(/(chor\d+)/);
 	if (!matches) {
-		return;
+		return "unknown";
 	}
-	filename = matches[1];
+	output = matches[1];
 	if (tonic.toUpperCase() !== "ORIGINAL") {
-		filename += "-" + tonic.replace("-", "flat").replace("#", "sharp");
+		output += "-" + tonic.replace("-", "flat").replace("#", "sharp");
 	}
 	octave = parseInt(octave);
 	if (octave) {
 		if (octave > 0) {
-			filename += "-up";
+			output += "-up";
 		}
 		if (octave < 0) {
-			filename += "-down";
+			output += "-down";
 		}
 	}
 	if (staves.toUpperCase() === "SATB") {
-		filename += "-satb";
+		output += "-satb";
 	}
+	return output;
+}
 
-	filename += ".svg";
-	console.log("FILENAME", filename);
+
+
+//////////////////////////////
+//
+// saveChoraleSvg --
+//
+
+function saveChoraleSvg() {
+	var filename = getExampleId() + ".svg";
 	saveHumdrumSvg("main", filename);
 }
 

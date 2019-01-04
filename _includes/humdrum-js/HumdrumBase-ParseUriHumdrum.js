@@ -18,14 +18,31 @@ HumdrumBase.prototype.ParseUriHumdrum = function (uri, options) {
 		console.log("Error: No content in input string:", uri);
 		return this;
 	}
-	var matches = uri.match(/^(h|hum|humdrum):\/\/(.*)\s*$/);
-	if (matches) {
-		this.parse("http://kern.humdrum.org/data?s=" + matches[2], options);
+
+	var url = this.MakeUrlHumdrum(uri);
+	if (url) {
+		this.parse(url, options);
 	} else {
 		console.log("Error: input string is not a Humdrum URI:", uri);
 	}
 	return this;
 };
+
+
+
+///////////////////////////////
+//
+// HumdrumBase::MakeUrlHumdrum -- Convert a (kernScores) Humdrum URI into a URL.
+//
+
+HumdrumBase.prototype.MakeUrlHumdrum = function (uri, options) {
+	var url = "";
+	var matches = uri.match(/^(h|hum|humdrum):\/\/(.*)\s*$/);
+	if (matches) {
+		url = "http://kern.humdrum.org/data?s=" + matches[2];
+	}
+	return url;
+}
 
 
 

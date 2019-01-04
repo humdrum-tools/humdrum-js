@@ -20,7 +20,25 @@ HumdrumBase.prototype.ParseUriGithub = function (uri, opts) {
 		console.log("Error: No content in input string:", uri);
 		return this;
 	}
-	var matches = uri.match(/^(g|github):\/\/([^\/]+)\/([^\/]+)\/(.*)\s*$/);
+	var url = this.MakeUrlGithub(uri);
+	if (url) {
+		this.parse(url, opts);
+	} else {
+		console.log("Error: input string is not a Github URI:", uri);
+	}
+	return this;
+};
+
+
+
+///////////////////////////////
+//
+// HumdrumBase::MakeUrlGithub -- Convert Github URI into a URL.
+//
+
+HumdrumBase.prototype.MakeUrlGithub = function (uri, opts) {
+	var url = "";
+	var matches = uri.match(/^(g|gh|github):\/\/([^\/]+)\/([^\/]+)\/(.*)\s*$/);
 	if (matches) {
 		var account = matches[2];
 		var repo    = matches[3];
@@ -31,13 +49,10 @@ HumdrumBase.prototype.ParseUriGithub = function (uri, opts) {
 		} else {
 			variant = "master";
 		}
-		var url = "https://raw.githubusercontent.com/" + account + "/" + repo + "/" + variant + "/" + file;
-		this.parse(url, opts);
-	} else {
-		console.log("Error: input string is not a Github URI:", uri);
+		url = "https://raw.githubusercontent.com/" + account + "/" + repo + "/" + variant + "/" + file;
 	}
-	return this;
-};
+	return url;
+}
 
 
 
