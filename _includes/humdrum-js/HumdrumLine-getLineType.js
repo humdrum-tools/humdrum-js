@@ -1,7 +1,7 @@
 //////////////////////////////
 //
 // HumdrumLine::getLineType -- Return the primary line type category:
-
+//
 //    "Empty"              == line is empty
 //    "RefRecord"          == line is a reference record
 //    "UniversalRefRecord" == line is a universal reference record
@@ -13,8 +13,9 @@
 //
 
 HumdrumLine.prototype.getLineType = function () {
-	if (this.lineType && (typeof this.lineType === "string" || this.lineType instanceof String)) {
-		return this.lineType;
+	if (this.lineStructure && this.lineStructure.lineType &&
+			(typeof this.lineStructure.lineType === "string" || this.lineStructure.lineType instanceof String)) {
+		return this.lineStructure.lineType;
 	} else {
 		return "";
 	}

@@ -18,7 +18,7 @@ href="https://github.com/craigsapp/bach-370-chorales">this Github
 repository</a> and dynamically generate notation based on the option
 settings from the following menus.  View the <a target="_blank"
 href="https://raw.githubusercontent.com/humdrum-tools/humdrum-js/master/topic/chorales/index.md">pages's
-source code</a> to see how the navigator is implemented.
+source code</a> to see how the typesetter is implemented.
 
 Keyboard shortcuts: the left/right arrows navigate through the
 chorale list (or you can click on the title menu to choose one at
@@ -44,13 +44,13 @@ on your webpage.
 
 #right-side {
 	position: absolute;
-	right: -210px;
-	top: 300px;
+	right: -310px;
+	top: 250px;
 	overflow: hidden;
 	max-height: 600px;
 	min-height: 300px;
 	max-height: 600px;
-	width:200px;
+	width:300px;
 }
 pretransparent code.transparent {
 	background-color: transparent !important;
@@ -73,10 +73,10 @@ pre.narrow::-webkit-scrollbar, code.narrow::-webkit-scrollbar {
 	height: 0px;
 }
 </style>
-<div id="right-side">
+<div style="padding-bottom:50px;" id="right-side">
 HTML code for music example:
 <pre style="padding-bottom:-9px;" class="narrow html">
-<code>&lt;html&gt;
+<code id="x590">&lt;html&gt;
 &lt;head&gt;
 &lt;title&gt;My Example&lt;/title&gt;
 &lt;script src="https://verovio-script.humdrum.org/scripts/verovio-toolkit.js"&gt;&lt;/script&gt;
@@ -108,7 +108,11 @@ copy only the middle box's text if you already have the Humdrum
 notation plugin setup in your page.  The width of the music notation
 on this page is 590 pixels, so when placing in a containing element
 that is 590 pixels, the layout will match the one for the music on
-this page.
+this page. Adjust the following slider to change the target width
+for the HTML example:
+<span class="range">
+	<input style="width:300px;" class="myform" id="targetWidth" type="range" min="100" max="1500" value="590">
+</span>
 </p>
 </div>
 
@@ -170,14 +174,14 @@ this page.
 
 	<tr>
 		<td colspan="4">
-			<span style="display:none" id="measures">
+			<span style="display:block" id="measures">
 				Measures:
-				<select id="barbegin">
+				<select class="myform" id="barbegin">
 					<option value="0">beginning</option>
 					<option value="$">end</option>
 				</select>
 				to 
-				<select id="barend">
+				<select class="myform" id="barend">
 					<option value="0">beginning</option>
 					<option selected value="$">end</option>
 				</select>
@@ -217,6 +221,7 @@ this page.
 
 <script>
 var URIBASE = "github://craigsapp/bach-370-chorales";
+var CURRENTWORK = new Humdrum();
 
 document.addEventListener("DOMContentLoaded", function () {
 	var index = new Humdrum();
@@ -309,10 +314,41 @@ function buildTitleMenu(index) {
 //
 
 function displayNotation(opts) {
+console.log("opts", opts);
 	var filebase = opts.file.replace(/\.[^.]*$/, "").replace(/.*\//, "");
 	var script = document.querySelector("#" + filebase);
 	var filter = "";
+	var swapper;
+	if ((typeof opts.barbegin != "undefined") && (typeof opts.barend != "undefined")) {
+		if (opts.barbegin == "0" && opts.barend == "$") {
+			// the entire piece, so do not extract measures
+		} else {
+			filter += filter ? " | " : "";
+			if (opts.barbegin === opts.barend) {
+				filter += "myank -m " + opts.barbegin;
+			} else {
+				var starting = opts.barbegin;
+				var ending = opts.barend;
+				if (ending === "$") {
+					// this is good
+				} else if (starting === "$") {
+					// this is bad: swap them
+					swapper = ending;
+					ending = starting;
+					starting = swapper;
+				} else {
+					if (parseInt(starting) > parseInt(ending)) {
+						swapper = ending;
+						ending = starting;
+						starting = swapper;
+					}
+				}
+				filter += "myank -m " + starting + "-" + ending;
+			}
+		}
+	}
 	if (opts.staves.toUpperCase() === "GS") {
+		filter += filter ? " | " : "";
 		filter += "satb2gs";
 	}
 	if (opts.tonic.toUpperCase() !== "ORIGINAL") {
@@ -345,9 +381,76 @@ function displayNotation(opts) {
 		}
 		options.spacingStaff = filter.match(/satb/) ? 6 : 10;
 		options.appendText = "!!!header-left: @{SCT}";
+		options.targetWidth = opts.targetWidth;
+		options.file = opts.file;
 		displayHumdrum(options);
-		printExampleCode(opts.file, options);
+		printExampleCode(options);
+		loadCurrentWork();
 	}
+}
+
+
+
+//////////////////////////////
+//
+// loadCurrentWork --
+//
+
+function loadCurrentWork() {
+	var element = document.querySelector("#main-humdrum");
+	var text = element.textContent;
+	CURRENTWORK.parse(text);
+	var measures = CURRENTWORK.getMeasureNumbers();
+	if (measures.length == 0) {
+		return;
+	}
+	measures[measures.length - 1] = "$";
+	var pickup = CURRENTWORK.hasPickup();
+	if (pickup) {
+		measures.unshift(0);
+	}
+	var barbegin = document.querySelector("#barbegin");
+	var barend = document.querySelector("#barend");
+	if (!barbegin || !barend) {
+		return;
+	}
+	var output = "";
+	for (var i=0; i<measures.length; i++) {
+		if (i == 0) {
+			output += '<option value="0">beginning</option>\n';
+		} else if (measures[i] === "$") {
+			output += '<option value="$">end</option>\n';
+		} else {
+			output += '<option value="' + measures[i] + '">' + measures[i] + '</option>\n';
+		}
+	}
+
+	var bbindex = barbegin.selectedIndex;
+	var beindex = barend.selectedIndex;
+	if (bbindex > beindex) {
+		var temp = beindex;
+		beindex = bbindex;
+		bbindex = temp;
+	}
+	var endindex = barbegin.length - 1;
+
+	if (beindex == endindex) {
+		beindex = measures.length - 1;
+	}
+	if (bbindex == endindex) {
+		bbindex = measures.length - 1;
+	}
+	if (beindex > measures.length - 1) {
+		beindex = measures.length - 1;
+	}
+	if (bbindex > measures.length - 1) {
+		bbindex = measures.length - 1;
+	}
+	
+	barbegin.innerHTML = output;
+	barend.innerHTML = output;
+	barbegin.selectedIndex = bbindex;
+	barend.selectedIndex = beindex;
 }
 
 
@@ -357,7 +460,7 @@ function displayNotation(opts) {
 // printExampleCode
 //
 
-function printExampleCode(file, opts) {
+function printExampleCode(opts) {
 	var example = document.querySelector("#example");
 	if (!example) {
 		return;
@@ -367,7 +470,7 @@ function printExampleCode(file, opts) {
 	output += "<script" + ">displayHumdrum({\n";
    output += '   source: "' + exampleid + '",\n';
 	if (opts.scale) {
-		output += "   scale: " + opts.scale + ",\n";
+		output += "   scale: " + parseInt(parseInt(opts.scale) * parseInt(opts.targetWidth) / 590.0) + ",\n";
 	}
 	if (opts.spacingLinear != 0.25) {
 		output += "   spacingLinear: " + opts.spacingLinear + ",\n";
@@ -387,12 +490,17 @@ function printExampleCode(file, opts) {
 	if (opts.filter) {
 		output += '   filter: "' + opts.filter + '",\n';
 	}
-   output += '   uri: "github://craigsapp/bach-370-chorales/' + file + '"\n';
+   output += '   uri: "github://craigsapp/bach-370-chorales/' + opts.file + '"\n';
    output += "})";
 	output += "</script" + ">\n";
 	output += '<script id="' + exampleid + '" type="text/x-humdrum"><';
 	output += '/script>';
 	example.textContent = output;
+
+	var x590 = document.querySelector("#x590");
+	if (x590) {
+		x590.textContent = x590.textContent.replace(/width:\d+px/, "width:" + opts.targetWidth + "px");
+	}
 }
 
 
@@ -445,7 +553,6 @@ function prepareExample(filename) {
 //
 
 function getAdjacentFiles() {
-
 	var selection = document.querySelector("#file");
 	if (!selection) {
 		return;
@@ -456,7 +563,6 @@ function getAdjacentFiles() {
 	var below = index == 0 ? len-1 : index - 1;
 	preFetch(selection[above].value);
 	preFetch(selection[below].value);
-
 }
 
 
@@ -498,7 +604,7 @@ function preFetch(filename) {
 //
 
 window.addEventListener("keydown", function (event) {
-	//	console.log(event);
+	console.log(event);
 	var selection = document.querySelector("#file");
 	if (!selection) {
 		return;
@@ -549,6 +655,7 @@ window.addEventListener("keydown", function (event) {
 	selection.selectedIndex = newindex;
 	generateNotationFromOptions();
 });
+
 
 
 //////////////////////////////
@@ -615,11 +722,22 @@ function saveChoraleSvg() {
 <!-- ---------- STYLES for page ---------- -->
 
 <style>
+nav {
+	display: none;
+}
 footer {
 	display: none;
 }
+section {
+	margin-left: -100px;
+}
+@media print, screen and (max-width: 1060px) {
+	section {
+		margin-left: 0px;
+	}
+}
 body section {
-	min-height: 2000px !important;
+	min-height: 1200px !important;
 	min-width: 590px !important;
 }
 table.chooser tr, table.chooser td {

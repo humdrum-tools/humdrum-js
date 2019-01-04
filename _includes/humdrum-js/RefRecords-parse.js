@@ -40,7 +40,7 @@ RefRecords.prototype.parse = function (humdrumfile) {
 
 	if (humdrumfile instanceof HumdrumBase) {
 		for (i=0; i<lines.length; i++) {
-			if (lines[i].lineType.match(/RefRecord/)) {
+			if (lines[i].getLineType().match(/RefRecord/)) {
 				// also allowing UniversalRefRecord.
 				var record = new RefRecordEntry(lines[i], i);
 				this.sequence.push(record);

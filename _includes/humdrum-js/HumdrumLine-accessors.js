@@ -32,14 +32,13 @@ HumdrumLine.prototype.getOwner = function () {
 
 //////////////////////////////
 //
-// HumdrumLine::getNextLine -- Return the .nextLine property of the object, or a null
-//     if .nextLine does not exist, is invalid or is null.  The return value
-//     is the next HumdrumLine object in the HumdrumBase object that owns the line.
+// HumdrumLine::getNextLine -- Return the next line in the data after this one.
+//     Returns null if there is no line after this one.
 //
 
 HumdrumLine.prototype.getNextLine = function () {
-	if (this.nextLine && this.nextLine instanceof HumdrumLine) {
-		return this.nextLine;
+	if (this.lineStructure && this.lineStructure.nextLine && this.lineStructure.nextLine instanceof HumdrumLine) {
+		return this.lineStructure.nextLine;
 	} else {
 		return null;
 	}
@@ -49,14 +48,45 @@ HumdrumLine.prototype.getNextLine = function () {
 
 //////////////////////////////
 //
-// HumdrumLine::getPrevLine -- Return the .prevLine property of the object, or a null
-//     if .prevLine does not exist, is invalid or is null.  The return value
-//     is the previous HumdrumLine object in the HumdrumBase object that owns the line.
+// HumdrumLine::getNextLineOfSameType -- Returns the next line that has the same basic type
+//     in the data as the line.  If there is no next line of the same time, then null is returned.
+//
+
+HumdrumLine.prototype.getNextLineOfSameType = function () {
+	if (this.lineStructure && this.lineStructure.nextLineOfType && this.lineStructure.nextLineOfType instanceof HumdrumLine) {
+		return this.lineStructure.nextLineOfType;
+	} else {
+		return null;
+	}
+};
+
+
+
+//////////////////////////////
+//
+// HumdrumLine::getPrevLine -- Return the previous line in the data before this one.
+//     Returns null if there is no line before this one.
 //
 
 HumdrumLine.prototype.getPrevLine = function () {
-	if (this.prevLine && this.prevLine instanceof HumdrumLine) {
-		return this.prevLine;
+	if (this.lineStructure && this.lineStructure.prevLine && this.lineStructure.prevLine instanceof HumdrumLine) {
+		return this.lineStructure.prevLine;
+	} else {
+		return null;
+	}
+};
+
+
+
+//////////////////////////////
+//
+// HumdrumLine::getPrevLineOfSameType -- Returns the previous line that has the same basic type
+//     in the data as the line.  If there is no previous line of the same time, then null is returned.
+//
+
+HumdrumLine.prototype.getPrevLineOfSameType = function () {
+	if (this.lineStructure && this.lineStructure.prevLineOfType && this.lineStructure.prevLineOfType instanceof HumdrumLine) {
+		return this.lineStructure.prevLineOfType;
 	} else {
 		return null;
 	}
@@ -71,7 +101,11 @@ HumdrumLine.prototype.getPrevLine = function () {
 //
 
 HumdrumLine.prototype.isSpined = function () {
-	return this.spineQ ? true : false;
+	if (this.lineStructure) {
+		return this.spineQ ? true : false;
+	} else {
+		return null;
+	}
 };
 
 
@@ -100,8 +134,8 @@ HumdrumLine.prototype.getTokens = function () {
 //
 
 HumdrumLine.prototype.getLineIndex = function () {
-	if (typeof this.lineIndex === "number") {
-		return this.lineIndex;
+	if (this.lineStructure && typeof this.lineStructure.lineIndex === "number") {
+		return this.lineStructure.lineIndex;
 	} else {
 		return -1;
 	}
@@ -116,6 +150,80 @@ HumdrumLine.prototype.getLineIndex = function () {
 
 HumdrumLine.prototype.getLineNumber = function () {
 	return this.getLineIndex() + 1;
+};
+
+
+
+//////////////////////////////
+//
+// HumdrumLine::getNextLine -- Returns the next line in the data, otherwise returns null.
+//
+
+HumdrumLine.prototype.getNextLine = function () {
+	if (!this.lineStructure) {
+		return null;
+	}
+	if (this.lineStructure.nextLine) {
+		return this.lineStructure.nextLine;
+	} else {
+		return null;
+	}
+};
+
+
+
+//////////////////////////////
+//
+// HumdrumLine::getPrevLine -- Returns the previous line in the data, otherwise returns null.
+//
+
+HumdrumLine.prototype.getPrevLine = function () {
+	if (!this.lineStructure) {
+		return null;
+	}
+	if (this.lineStructure.prevLine) {
+		return this.lineStructure.prevLine;
+	} else {
+		return null;
+	}
+};
+
+
+
+//////////////////////////////
+//
+// HumdrumLine::getNextLineOfSameType -- Returns the next line in the data
+//     that has the same line type as this one, otherwise returns null.
+//
+
+HumdrumLine.prototype.getNextLineOfSameType = function () {
+	if (!this.lineStructure) {
+		return null;
+	}
+	if (this.lineStructure.nextLineOfType) {
+		return this.lineStructure.nextLineOfType;
+	} else {
+		return null;
+	}
+};
+
+
+
+//////////////////////////////
+//
+// HumdrumLine::getPrevLineOfSameType -- Returns the previous line in the data
+//     that has the same line type as this one, otherwise returns null.
+//
+
+HumdrumLine.prototype.getPrevLineOfSameType = function () {
+	if (!this.lineStructure) {
+		return null;
+	}
+	if (this.lineStructure.prevLineOfType) {
+		return this.lineStructure.prevLineOfType;
+	} else {
+		return null;
+	}
 };
 
 

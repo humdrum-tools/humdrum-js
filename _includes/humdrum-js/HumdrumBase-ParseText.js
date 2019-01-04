@@ -10,7 +10,10 @@ HumdrumBase.prototype.ParseText = function (text, options) {
 		console.log("Error: no content to parse");
 		return this;
 	}
-	this.parseCounter = 0;  // finally got here (but probably always fast)
+	if (typeof this.parseCounter !== "undefined") {
+		// finally got here (but probably always fast)
+		delete this.parseCounter;
+	}
 	this.clear();
 	if ((typeof text !== "string") && !(text instanceof String)) {
 		console.log("Error: input to HumdrumBase::ParseText is not text but rather", typeof text, "for data:", text);

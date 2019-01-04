@@ -20,6 +20,9 @@
 // * HumdrumBase::getToken()                = Return a HumdrumToken object.
 // * HumdrumBase::getTokenText()            = Return the text of a HumdrumToken object.
 // * HumdrumBase::stringify()               = Convert object to plain text.
+// * HumdrumBase::getBarlines()             = Get a list of barline in the data.
+// * HumdrumBase::hasPickup()               = True if the data has a pickup measure.
+// * HumdrumBase::getMeasureNumbers()       = Get a list of measures lines in the data.
 //
 // Data analyses handled by HumdrumBase:
 //
@@ -69,9 +72,14 @@
 {% include humdrum-js/HumdrumBase-getLine.js             -%}
 {% include humdrum-js/HumdrumBase-getToken.js            -%}
 {% include humdrum-js/HumdrumBase-getLines.js            -%}
+{% include humdrum-js/HumdrumBase-hasLinesOfType.js      -%}
+{% include humdrum-js/HumdrumBase-getBarlines.js         -%}
+{% include humdrum-js/HumdrumBase-hasPickup.js           -%}
+{% include humdrum-js/HumdrumBase-getMeasureNumbers.js   -%}
 {% include humdrum-js/HumdrumBase-doBaseAnalyses.js      -%}
 {% include humdrum-js/HumdrumBase-analyzeRefRecords.js   -%}
 {% include humdrum-js/HumdrumBase-analyzeLineSequence.js -%}
+{% include humdrum-js/HumdrumBase-accessors.js           -%}
 
 ///////////////////////////////////////////////////////////////////////////
 //

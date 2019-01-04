@@ -10,10 +10,10 @@
 HumdrumBase.prototype.ParseUrl = function (url, opts) {
 	this.clear();
 	var tlines = url.match(/[^\r\n]+/g);
-	if (tlines.length != 1) {
+	if (tlines && tlines.length != 1) {
 		console.log("Warning: only processing first line of string:", url);
 	}
-	if (tlines.length == 0) {
+	if (tlines && tlines.length == 0) {
 		console.log("Error: No content in input string:", url);
 		return this;
 	}

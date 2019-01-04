@@ -17,37 +17,38 @@ HumdrumLine.prototype.parse = function (linetext) {
 	}
 	this.text = lines[0];
 	this.fields = [];
+	this.lineStructure = {};
 	var token;
 	if (this.text.match(/^!!/)) {
 		// global comment, reference record, universal record/comment, etc., with no tokens.
 		token = new HumdrumToken(this.text, 0);
 		token.owner = this;
 		this.fields.push(token);
-		this.spineQ = false;
+		this.lineStructure.spineQ = false;
 		if (this.text.match(/^!!![^!:][^:]*:/)) {
-			this.lineType = "RefRecord";
+			this.lineStructure.lineType = "RefRecord";
 		} else if (this.text.match(/^!!!![^!:][^:]*:/)) {
-			this.lineType = "UniversalRefRecord";
+			this.lineStructure.lineType = "UniversalRefRecord";
 		} else {
-			this.lineType = "GlobalComment";
+			this.lineStructure.lineType = "GlobalComment";
 		}
 	} else if (this.text === "") {
 		// empty line
 		token = new HumdrumToken(this.text);
 		token.owner = this;
 		this.fields.push(token);
-		this.spineQ = false;
-		this.lineType  = "Empty";
+		this.lineStructure.spineQ = false;
+		this.lineStructure.lineType  = "Empty";
 	} else {
-		this.spineQ = true;
+		this.lineStructure.spineQ = true;
 		if (this.text.match(/^\*/)) {
-			this.lineType = "Interpretation";
+			this.lineStructure.lineType = "Interpretation";
 		} else if (this.text.match(/^\!/)) {
-			this.lineType = "LocalComment";
+			this.lineStructure.lineType = "LocalComment";
 		} else if (this.text.match(/^\=/)) {
-			this.lineType = "Barline";
+			this.lineStructure.lineType = "Barline";
 		} else {
-			this.lineType = "Data";
+			this.lineStructure.lineType = "Data";
 		}
 		var tokenstring = "";
 		var tabcount = 0;

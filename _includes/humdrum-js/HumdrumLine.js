@@ -48,9 +48,13 @@
 //
 // * this.text      = text string of line.
 // * this.fields    = data fields of line (tokens or global/reference records).
-// * this.nextLine  = pointer to the next line in the file.
-// * this.prevLine  = pointer to the previous line in the file.
-// * this.spineQ    = true if the line has token data. Based on line type:
+// * this.owner = The Humdrum data object that the HumdrumLine object is contained in.
+// * this.lineStructure = database describing interactions with other lines in the data.
+// * this.lineStructure.nextLine  = pointer to the next line in the file.
+// * this.lineStructure.prevLine  = pointer to the previous line in the file.
+// * this.lineStructure.nextLineOfType  = pointer to the next line of the same type in the file.
+// * this.lineStructure.prevLineOfType  = pointer to the previous line of the same type in the file.
+// * this.lineStructure.spineQ    = true if the line has token data. Based on line type:
 //       * RefRecord                = false
 //       * UniversalRefRecord       = false
 //       * UniversalComment         = false
@@ -60,7 +64,7 @@
 //       * Barline                  = true
 //       * Empty                    = false
 //       * Data                     = true
-// * this.lineType = the type of line:
+// * this.lineStructure.lineType = the type of line:
 //       * RefRecord                = in the form "^!!!KEY: VALUE"
 //       * UniversalRefRecord       = in the form "^!!!!KEY: VALUE"
 //       * UniversalComment         = in the form /^!!!.*/ that is not a universal reference record
@@ -70,7 +74,6 @@
 //       * Barline                  = line starts with "="
 //       * Empty                    = no text on line
 //       * Data                     = anything else
-// * this.owner = The Humdrum data object that the HumdrumLine object is contained in.
 //
 
 {% include humdrum-js/HumdrumLine-HumdrumLine.js -%}

@@ -35,3 +35,20 @@ HumdrumLine.prototype.getToken = function () {
 
 
 
+//////////////////////////////
+//
+// HumdrumLine::getTokenText -- Return the text field of the given token.
+//    Currently only allowing integer parameter
+//
+
+HumdrumLine.prototype.getTokenText = function (index) {
+	var token = this.getToken(index);
+	if (!token) {
+		return "";
+	} else {
+		return token.getText();
+	}
+}
+
+
+
