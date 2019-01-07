@@ -6,6 +6,7 @@
 HumdrumBase.prototype.clear = function () {
 	this.lines = [];   // storage for each line record in Humdrum data
 	this.refs  = null; // storage for reference records;
+	this.owner = null; // used when contained in HumdrumSet
 };
 
 

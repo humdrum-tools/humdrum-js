@@ -12,6 +12,7 @@
 {% include humdrum-js/HumdrumAnalysis.js    -%}
 {% include humdrum-js/HumdrumTool.js        -%}
 {% include humdrum-js/Humdrum.js            -%}
+{% include humdrum-js/HumdrumSet.js         -%}
 
 
 

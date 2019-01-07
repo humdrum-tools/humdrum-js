@@ -16,11 +16,20 @@ HumdrumBase.prototype.ParseText = function (text, options) {
 	}
 	this.clear();
 	if ((typeof text !== "string") && !(text instanceof String)) {
-		console.log("Error: input to HumdrumBase::ParseText is not text but rather", typeof text, "for data:", text);
-		return this;
+		if (Array.isArray(text) && (text.length > 0) && (typeof text[0] === "string" || text[0] instanceof String)) {
+			// This is good: the input will be assigned to hlines
+		} else {
+			console.log("Error: input to HumdrumBase::ParseText is not text but rather", typeof text, "for data:", text);
+			return this;
+		}
 	}
 	this.lines = [];
-	var hlines = text.match(/[^\r\n]+/g);
+	var hlines;
+	if (Array.isArray(text)) {
+		hlines = text;
+	} else {
+		hlines = text.match(/[^\r\n]+/g);
+	}
 	for (var i=0; i<hlines.length; i++) {
 		var humline = new HumdrumLine(hlines[i]);
 		humline.owner = this;
@@ -46,6 +55,12 @@ HumdrumBase.prototype.ParseText = function (text, options) {
 	} else {
 		// implicitly requested
 		this.doBaseAnalyses();
+	}
+
+	if (options && typeof options.onload === "function") {
+		options.onload(this);
+	} else if (typeof this.onload === "function") {
+		this.onload(this);
 	}
 
 	return this;

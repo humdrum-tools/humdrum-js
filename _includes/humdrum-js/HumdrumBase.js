@@ -23,6 +23,8 @@
 // * HumdrumBase::getBarlines()             = Get a list of barline in the data.
 // * HumdrumBase::hasPickup()               = True if the data has a pickup measure.
 // * HumdrumBase::getMeasureNumbers()       = Get a list of measures lines in the data.
+// * HumdrumBase::getOwner()                = Return the HumdrumSet owner of the object.
+// * HumdrumBase::setOwner()                = Assign the HumdrumSet owner for the object.
 //
 // Data analyses handled by HumdrumBase:
 //
@@ -79,6 +81,8 @@
 {% include humdrum-js/HumdrumBase-doBaseAnalyses.js      -%}
 {% include humdrum-js/HumdrumBase-analyzeRefRecords.js   -%}
 {% include humdrum-js/HumdrumBase-analyzeLineSequence.js -%}
+{% include humdrum-js/HumdrumBase-getOwner.js            -%}
+{% include humdrum-js/HumdrumBase-setOwner.js            -%}
 {% include humdrum-js/HumdrumBase-accessors.js           -%}
 
 ///////////////////////////////////////////////////////////////////////////

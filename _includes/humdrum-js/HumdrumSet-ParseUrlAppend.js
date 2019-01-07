@@ -1,13 +1,13 @@
 //////////////////////////////
 //
-// HumdrumBase::ParseUrl -- Load Humdrum data from a URL.
+// HumdrumSet::ParseUrlAppend -- Load Humdrum data from a URL.
 //   Example URLs:
 //      http://kern.humdrum.org/data?s=folk/sioux/sioux002.krn
 //      https://raw.githubusercontent.com/craigsapp/densmore-teton-sioux/master/kern/sioux002.krn
-//   This function should not be called directly; use HumdrumBase::parse instead.
+//   This function should not be called directly; use HumdrumSet::parseAppend instead.
 //
 
-HumdrumBase.prototype.ParseUrl = function (url, opts) {
+HumdrumSet.prototype.ParseUrlAppend = function (url, opts) {
 	this.clear();
 	var tlines = url.match(/[^\r\n]+/g);
 	if (tlines && tlines.length != 1) {
@@ -26,7 +26,7 @@ HumdrumBase.prototype.ParseUrl = function (url, opts) {
 	request = new XMLHttpRequest();
 	(function (that) {
 		request.onload = function () {
-			that.parse(this.responseText, opts);
+			that.parseAppend(this.responseText, opts);
 		};
 	})(this);
 	request.open("GET", finalurl);
