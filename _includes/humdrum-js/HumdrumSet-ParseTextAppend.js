@@ -41,10 +41,8 @@ HumdrumSet.prototype.ParseTextAppend = function (text, options) {
 				this.segments.push(infile);
 				inlines = [];
 				exinterpcount = 0;
-console.log("SEGMENTNAME", segmentname);
 				if (segmentname) {
 					// infile.setSegmentName(segmentname);
-console.log("        STORING SEGMENT " , segmentname);
                this.nameToSegment[segmentname] = infile;
 				}
 				segmentname = "";
